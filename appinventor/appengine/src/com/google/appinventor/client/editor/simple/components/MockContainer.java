@@ -312,6 +312,14 @@ public abstract class MockContainer extends MockVisibleComponent implements Drop
     targets.add(this);
     return targets;
   }
+  
+  @Override
+  public void onRemoved()
+  {
+ 	for (MockComponent child : children) {
+    	getForm().fireComponentRemoved(child, true);
+ 	}
+  }
 
   @Override
   LayoutInfo createLayoutInfo(Map<MockComponent, LayoutInfo> layoutInfoMap) {
