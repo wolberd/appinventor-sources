@@ -16,7 +16,7 @@ import com.google.appinventor.components.common.YaVersion;
 import com.google.appinventor.components.runtime.errors.YailRuntimeError;
 import com.google.appinventor.components.runtime.util.JsonUtil;
 
-// dave wolber added...
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;

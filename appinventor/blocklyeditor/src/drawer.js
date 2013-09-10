@@ -153,6 +153,10 @@ Blockly.Drawer.isShowing = function() {
   return Blockly.Drawer.flyout_.isVisible();
 };
 
+/**
+ * @returns an array of xml code for each block in the given list
+ *   checks for both component and built-in block default parameters
+ */
 Blockly.Drawer.blockListToXMLArray = function(blockList,componentType) {
   var xmlArray = [];
   for(var i=0;i<blockList.length;i++) {
@@ -167,12 +171,15 @@ Blockly.Drawer.blockListToXMLArray = function(blockList,componentType) {
     var xmlBlock = Blockly.Xml.textToDom(blockXMLString).firstChild
     xmlArray.push(xmlBlock);
     
-    console.log("InsideBlockListToXMLArray--" +  blockList[i] +" type:"+componentType );
+   
     
   }
   return xmlArray;
 };
 
+/**
+ * @returns an xml string with default param if the type is matched
+ */
 Blockly.Drawer.defaultComponentBlocksXML = function(type,block) {
 	console.log("here inside defaultComponent block is:" + block);
 	if (type='TinyDB') {
@@ -183,7 +190,7 @@ Blockly.Drawer.defaultComponentBlocksXML = function(type,block) {
     '<value name="ARG1"><block type="text"><title name="TEXT"></title></block></value>' +
     '</block>' +
   '</xml>';
-  		  console.log("inside defaultComponentBlockXML -- identified a TinyDB.GetValue"+xmlString);
+  		  
 		   return xmlString;
 		}
 	}
