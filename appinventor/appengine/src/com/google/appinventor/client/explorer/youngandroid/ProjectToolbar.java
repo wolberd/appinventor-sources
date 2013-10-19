@@ -27,6 +27,10 @@ import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
+import com.google.appinventor.shared.rpc.project.UserProject;
+import com.google.appinventor.shared.rpc.project.youngandroid.NewYoungAndroidProjectParameters;
+import com.google.appinventor.shared.rpc.project.youngandroid.YoungAndroidProjectNode;
+
 import java.util.List;
 
 /**
@@ -37,6 +41,9 @@ public class ProjectToolbar extends Toolbar {
   private static final String WIDGET_NAME_NEW = "New";
   private static final String WIDGET_NAME_DELETE = "Delete";
   private static final String WIDGET_NAME_MORE_ACTIONS = "MoreActions";
+
+  private static final String WIDGET_NAME_GET_STARTED = "GetStarted";
+ 
   private static final String WIDGET_NAME_DOWNLOAD_ALL = "DownloadAll";
   private static final String WIDGET_NAME_DOWNLOAD_SOURCE = "DownloadSource";
   private static final String WIDGET_NAME_UPLOAD_SOURCE = "UploadSource";
@@ -46,6 +53,9 @@ public class ProjectToolbar extends Toolbar {
   private static final String WIDGET_NAME_DOWNLOAD_KEYSTORE = "DownloadKeystore";
   private static final String WIDGET_NAME_UPLOAD_KEYSTORE = "UploadKeystore";
   private static final String WIDGET_NAME_DELETE_KEYSTORE = "DeleteKeystore";
+
+  private static final String PROJECT_ARCHIVE_EXTENSION = ".aia";
+  public static final String TEMPLATES_ROOT_DIRECTORY =  "templates/";
 
   /**
    * Initializes and assembles all commands into buttons in the toolbar.
@@ -76,6 +86,9 @@ public class ProjectToolbar extends Toolbar {
         new DownloadAllAction()));
 
     addDropDownButton(WIDGET_NAME_MORE_ACTIONS, MESSAGES.moreActionsButton(), otherItems);
+    
+    addButton(new ToolbarItem(WIDGET_NAME_GET_STARTED, MESSAGES.getStartedButton(),
+        new GetStartedAction()));
 
     if (Ode.getInstance().getUser().getIsAdmin()) {
       List<ToolbarItem> adminItems = Lists.newArrayList();
@@ -95,6 +108,43 @@ public class ProjectToolbar extends Toolbar {
       new NewYoungAndroidProjectWizard().center();
       // The wizard will switch to the design view when the new
       // project is created.
+    }
+  }
+
+  private static class GetStartedAction implements Command {
+    @Override
+    public void execute() {
+      
+      final String projectName="SpeakIt";
+      // Callback for updating the project explorer after the project is created on the back-end
+      final Ode ode = Ode.getInstance();
+      final OdeAsyncCallback<UserProject> callback = new OdeAsyncCallback<UserProject>(
+        // failure message
+        MESSAGES.createProjectError()) {
+        @Override
+        public void onSuccess(UserProject projectInfo) {
+          // Update project explorer -- i.e., display in project view
+          if (projectInfo == null) {
+
+            Window.alert("Unable to open get started project:" + projectName);
+            ode.getProjectService().newProject(
+              YoungAndroidProjectNode.YOUNG_ANDROID_PROJECT_TYPE,
+              projectName,
+              new NewYoungAndroidProjectParameters(projectName),
+              this);
+            return;
+          }
+          Project project = ode.getProjectManager().addProject(projectInfo);
+          Ode.getInstance().openYoungAndroidProjectInDesigner(project);
+          //if (onSuccessCommand != null) {
+            // onSuccessCommand.execute(project);
+          // }  
+        }
+      };
+      String pathToZip = TEMPLATES_ROOT_DIRECTORY + projectName + "/" + projectName +
+        PROJECT_ARCHIVE_EXTENSION;
+      ode.getProjectService().newProjectFromTemplate(projectName, pathToZip, callback);
+    
     }
   }
 
