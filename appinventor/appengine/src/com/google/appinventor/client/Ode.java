@@ -84,6 +84,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.CustomButton;
 
 /**
  * Main entry point for Ode. Defines the startup UI elements in
@@ -942,20 +943,34 @@ public class Ode implements EntryPoint {
         0,
         HasHorizontalAlignment.ALIGN_LEFT,
         HasVerticalAlignment.ALIGN_MIDDLE);
-
+    // here's the old messages...
     Label messageChunk1 = new Label("You don't have any projects yet."
         + " To learn how to use App Inventor, click the \"Learn\" item"
         + " at the top of the window; or to start your first project, click "
         + " the \"New\" button at the upper left of the window.");
     messageChunk1.setWidth("23em");
     Label messageChunk2 = new Label("Happy Inventing!");
+    // sample htm message....this works
+    HTML htmlMessage = new HTML ("<img src='/images/getStarted/ExistingUserButton.png' />");
+    // end of old stuff
+    
+    CustomButton newUserButton = new PushButton(new Image("images/getStarted/NewUserButton.png"));
+    CustomButton existingUserButton = new PushButton(new Image("images/getStarted/ExistingUserButton.png"));
+	newUserButton.addClickListener(new ClickListener() {
+        public void onClick(Widget sender) {
+          dialogBox.hide();
+          projectToolbar.getStarted();
+        }
+      });
 
+    
     // Add the elements to the grids and DialogBox.
-    messageGrid.setWidget(0, 0, messageChunk1);
-    messageGrid.setWidget(1, 0, messageChunk2);
+    // messageGrid.setWidget(0, 0, messageChunk1);
+    // messageGrid.setWidget(0, 0, newUserButton);
+    // messageGrid.setWidget(1, 0, existingUserButton);
 
-    mainGrid.setWidget(0, 0, dialogImage);
-    mainGrid.setWidget(0, 1, messageGrid);
+    mainGrid.setWidget(0, 0, newUserButton);
+    mainGrid.setWidget(0, 1, existingUserButton);
 
     dialogBox.setWidget(mainGrid);
 

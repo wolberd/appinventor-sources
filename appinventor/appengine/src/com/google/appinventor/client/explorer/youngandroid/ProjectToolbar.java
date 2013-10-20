@@ -31,6 +31,15 @@ import com.google.appinventor.shared.rpc.project.UserProject;
 import com.google.appinventor.shared.rpc.project.youngandroid.NewYoungAndroidProjectParameters;
 import com.google.appinventor.shared.rpc.project.youngandroid.YoungAndroidProjectNode;
 
+import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.SimplePanel;
+import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.Widget;
+
 import java.util.List;
 
 /**
@@ -111,6 +120,12 @@ public class ProjectToolbar extends Toolbar {
     }
   }
 
+  public void getStarted()
+  {
+     GetStartedAction action = new GetStartedAction();
+     action.execute();
+  }
+
   private static class GetStartedAction implements Command {
     @Override
     public void execute() {
@@ -144,9 +159,72 @@ public class ProjectToolbar extends Toolbar {
       String pathToZip = TEMPLATES_ROOT_DIRECTORY + projectName + "/" + projectName +
         PROJECT_ARCHIVE_EXTENSION;
       ode.getProjectService().newProjectFromTemplate(projectName, pathToZip, callback);
+      createStarterDialog(true);
     
     }
   }
+
+  /**
+   * Creates, visually centers, and optionally displays the dialog box
+   * that informs the user how to start learning about using App Inventor
+   * @param showDialog Convenience variable to show the created DialogBox.
+   * @return The created and optionally displayed Dialog box.
+   */
+  public static DialogBox createStarterDialog(boolean showDialog) {
+    // Create the UI elements of the DialogBox
+    final DialogBox dialogBox = new DialogBox(false, false); // DialogBox(autohide, modal)
+    dialogBox.setStylePrimaryName("ode-DialogBox");
+    dialogBox.setText("Welcome to App Inventor!");
+    dialogBox.setHeight("400px");
+    dialogBox.setWidth("400px");
+    dialogBox.setGlassEnabled(false);  // was true
+    dialogBox.setAnimationEnabled(true);
+    dialogBox.center();
+    final VerticalPanel DialogBoxContents = new VerticalPanel();
+    HTML message = new HTML("<h2>This is a sample app to get you started. You can try it on your phone or tablet by downloading the AI Companion app to your device</h2>");
+    message.setStyleName("DialogBox-message");
+    SimplePanel holder = new SimplePanel();
+    Button ok = new Button("Continue");
+    // you can put images in appinventor-sources/appinventor/appengine/war/images
+    //   and then...
+    Image downloadImg = new Image("/images/downloadCompanion.png");
+    
+    ok.addClickListener(new ClickListener() {
+        public void onClick(Widget sender) {
+          /*
+          dialogBox.hide();
+          getProjectService().getProjects(new AsyncCallback<long[]>() {
+              @Override
+              public void onSuccess(long [] projectIds) {
+                if (projectIds.length == 0) {
+                  createNoProjectsDialog(true);
+                }
+              }
+		  
+              @Override
+              public void onFailure(Throwable projectIds) {
+                // OdeLog.elog("Could not get project list");
+              }
+            });
+        */
+        // below is a simple and sort of dumb thing to do when the user clicks continue
+        //   we need to set it up so it goes to next step, maybe a different dialog, or
+        //   maybe we have a data structure of steps and we use its data to fill up
+        //   the fixed fields in this dialog box as the user steps through
+        HTML message2 = new HTML("<h2>This is the next step.</h2>");
+        DialogBoxContents.add(message2);
+        dialogBox.show();
+        }
+      });
+    holder.add(ok);
+    DialogBoxContents.add(message);
+    DialogBoxContents.add(downloadImg);
+    DialogBoxContents.add(holder);
+    dialogBox.setWidget(DialogBoxContents);
+    dialogBox.show();
+    return dialogBox;
+  }
+  
 
   private static class DownloadAllAction implements Command {
     @Override
