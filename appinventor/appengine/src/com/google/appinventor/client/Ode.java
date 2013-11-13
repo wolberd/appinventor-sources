@@ -25,6 +25,7 @@ import com.google.appinventor.client.explorer.project.ProjectChangeAdapter;
 import com.google.appinventor.client.explorer.project.ProjectManager;
 import com.google.appinventor.client.explorer.project.ProjectManagerEventAdapter;
 import com.google.appinventor.client.explorer.youngandroid.ProjectToolbar;
+import com.google.appinventor.client.explorer.youngandroid.NewUserGetStarted;
 import com.google.appinventor.client.jsonp.JsonpConnection;
 import com.google.appinventor.client.output.OdeLog;
 import com.google.appinventor.client.settings.user.UserSettings;
@@ -922,7 +923,8 @@ public class Ode implements EntryPoint {
   newUserButton.addClickListener(new ClickListener() {
         public void onClick(Widget sender) {
           dialogBox.hide();
-          projectToolbar.getStarted();
+          //projectToolbar.getStarted();
+          NewUserGetStarted.getStarted();
         }
       });
   
