@@ -2,22 +2,9 @@ package com.google.appinventor.client.explorer.youngandroid;
 
 import static com.google.appinventor.client.Ode.MESSAGES;
 
-import com.google.appinventor.client.ErrorReporter;
 import com.google.appinventor.client.Ode;
 import com.google.appinventor.client.OdeAsyncCallback;
-import com.google.appinventor.client.boxes.ProjectListBox;
-import com.google.appinventor.client.boxes.ViewerBox;
 import com.google.appinventor.client.explorer.project.Project;
-import com.google.appinventor.client.tracking.Tracking;
-import com.google.appinventor.client.utils.Downloader;
-import com.google.appinventor.client.widgets.Toolbar;
-import com.google.appinventor.client.wizards.DownloadUserSourceWizard;
-import com.google.appinventor.client.wizards.KeystoreUploadWizard;
-import com.google.appinventor.client.wizards.ProjectUploadWizard;
-import com.google.appinventor.client.wizards.youngandroid.NewYoungAndroidProjectWizard;
-import com.google.appinventor.shared.rpc.ServerLayout;
-import com.google.appinventor.shared.storage.StorageUtil;
-import com.google.common.collect.Lists;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
