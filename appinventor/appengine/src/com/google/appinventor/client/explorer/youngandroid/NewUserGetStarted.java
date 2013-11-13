@@ -92,7 +92,7 @@ public class NewUserGetStarted{
     dialogBox.setStylePrimaryName("ode-DialogBox");
     dialogBox.setHeight("400px");
     dialogBox.setWidth("400px");
-    dialogBox.setGlassEnabled(false);  // was true
+    //dialogBox.setGlassEnabled(true);  // was true
     dialogBox.setAnimationEnabled(true);
     
     AbsolutePanel holder = new AbsolutePanel();
