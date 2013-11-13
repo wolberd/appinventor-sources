@@ -31,16 +31,20 @@ import com.google.appinventor.shared.rpc.project.UserProject;
 import com.google.appinventor.shared.rpc.project.youngandroid.NewYoungAndroidProjectParameters;
 import com.google.appinventor.shared.rpc.project.youngandroid.YoungAndroidProjectNode;
 
+import com.google.gwt.user.client.ui.AbsolutePanel;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.CustomButton;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.SimplePanel;
-import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  * The project toolbar houses command buttons in the Young Android Project tab.
@@ -130,7 +134,7 @@ public class ProjectToolbar extends Toolbar {
     @Override
     public void execute() {
       
-      final String projectName="SpeakIt";
+      final String projectName="GetStarted";
       // Callback for updating the project explorer after the project is created on the back-end
       final Ode ode = Ode.getInstance();
       final OdeAsyncCallback<UserProject> callback = new OdeAsyncCallback<UserProject>(
@@ -163,6 +167,9 @@ public class ProjectToolbar extends Toolbar {
     
     }
   }
+  
+  // Pull out and start own class here, ideally.
+  public static int currentMessageIndex;
 
   /**
    * Creates, visually centers, and optionally displays the dialog box
@@ -170,60 +177,116 @@ public class ProjectToolbar extends Toolbar {
    * @param showDialog Convenience variable to show the created DialogBox.
    * @return The created and optionally displayed Dialog box.
    */
-  public static DialogBox createStarterDialog(boolean showDialog) {
+  public static DialogBox createEricaStarterDialog(boolean showDialog) {
     // Create the UI elements of the DialogBox
     final DialogBox dialogBox = new DialogBox(false, false); // DialogBox(autohide, modal)
     dialogBox.setStylePrimaryName("ode-DialogBox");
-    dialogBox.setText("Welcome to App Inventor!");
     dialogBox.setHeight("400px");
     dialogBox.setWidth("400px");
     dialogBox.setGlassEnabled(false);  // was true
     dialogBox.setAnimationEnabled(true);
-    dialogBox.center();
-    final VerticalPanel DialogBoxContents = new VerticalPanel();
-    HTML message = new HTML("<h2>This is a sample app to get you started. You can try it on your phone or tablet by downloading the AI Companion app to your device</h2>");
-    message.setStyleName("DialogBox-message");
-    SimplePanel holder = new SimplePanel();
-    Button ok = new Button("Continue");
-    // you can put images in appinventor-sources/appinventor/appengine/war/images
-    //   and then...
-    Image downloadImg = new Image("/images/downloadCompanion.png");
     
-    ok.addClickListener(new ClickListener() {
+    AbsolutePanel holder = new AbsolutePanel();
+    
+    Image backgroundImage = new Image("images/getStarted/Background2.gif");
+    backgroundImage.setPixelSize(835, 470);
+    holder.add(backgroundImage);
+    
+    Image exitButton = new Image("images/getStarted/RedExitButton1.gif");
+    exitButton.addClickListener(new ClickListener() {
         public void onClick(Widget sender) {
-          /*
-          dialogBox.hide();
-          getProjectService().getProjects(new AsyncCallback<long[]>() {
-              @Override
-              public void onSuccess(long [] projectIds) {
-                if (projectIds.length == 0) {
-                  createNoProjectsDialog(true);
-                }
-              }
-		  
-              @Override
-              public void onFailure(Throwable projectIds) {
-                // OdeLog.elog("Could not get project list");
-              }
-            });
-        */
-        // below is a simple and sort of dumb thing to do when the user clicks continue
-        //   we need to set it up so it goes to next step, maybe a different dialog, or
-        //   maybe we have a data structure of steps and we use its data to fill up
-        //   the fixed fields in this dialog box as the user steps through
-        HTML message2 = new HTML("<h2>This is the next step.</h2>");
-        DialogBoxContents.add(message2);
-        dialogBox.show();
+            dialogBox.hide();
         }
-      });
-    holder.add(ok);
-    DialogBoxContents.add(message);
-    DialogBoxContents.add(downloadImg);
-    DialogBoxContents.add(holder);
-    dialogBox.setWidget(DialogBoxContents);
+    });
+    
+    holder.add(exitButton);
+    holder.setWidgetPosition(exitButton, 805, 0);
+    
+    Image continueButton = new Image("images/getStarted/NextScreenButton2.gif");
+    continueButton.setPixelSize(190, 96);
+    continueButton.addClickListener(new ClickListener() {
+        public void onClick(Widget sender) {
+            dialogBox.hide();
+        }
+    });
+    holder.add(continueButton);
+    holder.setWidgetPosition(continueButton, 625, 370);
+    
+    dialogBox.setWidget(holder);
     dialogBox.show();
     return dialogBox;
   }
+  
+  
+  public static DialogBox createStarterDialog(boolean showDialog) {
+      // Create the UI elements of the DialogBox
+      final DialogBox dialogBox = new DialogBox(false, false); // DialogBox(autohide, modal)
+      dialogBox.setStylePrimaryName("ode-DialogBox");
+      dialogBox.setHeight("400px");
+      dialogBox.setWidth("400px");
+      dialogBox.setGlassEnabled(false);  // was true
+      dialogBox.setAnimationEnabled(true);
+      dialogBox.center();
+      final VerticalPanel DialogBoxContents = new VerticalPanel();
+      currentMessageIndex = 0;
+      final ArrayList<HTML> messages = new ArrayList<HTML>();
+      messages.add(new HTML("<h2>This is a sample app to get you started. You can try it on your phone or tablet by downloading the AI Companion app to your device</h2>"));
+      messages.add(new HTML("<h2>Either scan this QR code, or search for MIT AI2 Companion on your device.</h2>"));
+      messages.add(new HTML("<h2>Show the app you're building on your device. Open the companion app on your phone, then on your computer click Connect | Companion and scan the QR code.</h2>"));
+      messages.add(new HTML("<h2>Change the Screen's Title. Can you see the change on your device?</h2>"));
+      messages.add(new HTML("<h2>Change the Screen's Background. Can you see the change on your device?</h2>"));
+      messages.add(new HTML("<h2>Now it's time to explore and modify the app's behavior. Click on the Blocks button.</h2>"));
+      messages.get(0).setStyleName("DialogBox-message");
+      DialogBoxContents.add(messages.get(0));
+      SimplePanel holder = new SimplePanel();
+      Button ok = new Button("Continue");
+      Button back = new Button("Back");
+      // you can put images in appinventor-sources/appinventor/appengine/war/images
+      //   and then...
+      final Image downloadImg = new Image("/images/downloadCompanion.png");
+      
+      ok.addClickListener(new ClickListener() {
+          public void onClick(Widget sender) {
+            /*
+            dialogBox.hide();
+            getProjectService().getProjects(new AsyncCallback<long[]>() {
+                @Override
+                public void onSuccess(long [] projectIds) {
+                  if (projectIds.length == 0) {
+                    createNoProjectsDialog(true);
+                  }
+                }
+            
+                @Override
+                public void onFailure(Throwable projectIds) {
+                  // OdeLog.elog("Could not get project list");
+                }
+              });
+          */
+          // below is a simple and sort of dumb thing to do when the user clicks continue
+          //   we need to set it up so it goes to next step, maybe a different dialog, or
+          //   maybe we have a data structure of steps and we use its data to fill up
+          //   the fixed fields in this dialog box as the user steps through
+            if (currentMessageIndex < messages.size() - 1) {
+              DialogBoxContents.remove(messages.get(currentMessageIndex));
+              currentMessageIndex += 1;
+              messages.get(currentMessageIndex).setStyleName("DialogBox-message");
+              DialogBoxContents.remove(downloadImg);
+              DialogBoxContents.insert(messages.get(currentMessageIndex), 0);
+              dialogBox.setWidget(DialogBoxContents);
+              dialogBox.show();
+            }
+          }
+        });
+      holder.add(ok);
+      //DialogBoxContents.add(message.get(currentMessageIndex));
+      DialogBoxContents.add(downloadImg);
+      DialogBoxContents.add(holder);
+      dialogBox.setWidget(DialogBoxContents);
+      dialogBox.show();
+      return dialogBox;
+    }
+    
   
 
   private static class DownloadAllAction implements Command {

@@ -67,8 +67,10 @@ import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.rpc.StatusCodeException;
+import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
+import com.google.gwt.user.client.ui.CustomButton;
 import com.google.gwt.user.client.ui.DeckPanel;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.DockPanel;
@@ -84,7 +86,6 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
-import com.google.gwt.user.client.ui.CustomButton;
 
 /**
  * Main entry point for Ode. Defines the startup UI elements in
@@ -386,7 +387,7 @@ public class Ode implements EntryPoint {
             Window.open(BugReport.getBugReportLink(e), "_blank", "");
           }
         } else {
-          // Display a confirm dialog with error msg and if 'ok' open the debugging view	
+          // Display a confirm dialog with error msg and if 'ok' open the debugging view  
           if (Window.confirm(MESSAGES.internalErrorClickOkDebuggingView())) {
             Ode.getInstance().switchToDebuggingView();
           }
@@ -916,65 +917,43 @@ public class Ode implements EntryPoint {
     // Create the UI elements of the DialogBox
     final DialogBox dialogBox = new DialogBox(true);
     dialogBox.setStylePrimaryName("ode-DialogBox");
-    dialogBox.setText("Welcome to App Inventor!");
-
-    Grid mainGrid = new Grid(2, 2);
-    mainGrid.getCellFormatter().setAlignment(0,
-        0,
-        HasHorizontalAlignment.ALIGN_CENTER,
-        HasVerticalAlignment.ALIGN_MIDDLE);
-    mainGrid.getCellFormatter().setAlignment(0,
-        1,
-        HasHorizontalAlignment.ALIGN_CENTER,
-        HasVerticalAlignment.ALIGN_MIDDLE);
-    mainGrid.getCellFormatter().setAlignment(1,
-        1,
-        HasHorizontalAlignment.ALIGN_RIGHT,
-        HasVerticalAlignment.ALIGN_MIDDLE);
-
-    Image dialogImage = new Image(Ode.getImageBundle().androidGreenSmall());
-
-    Grid messageGrid = new Grid(2, 1);
-    messageGrid.getCellFormatter().setAlignment(0,
-        0,
-        HasHorizontalAlignment.ALIGN_JUSTIFY,
-        HasVerticalAlignment.ALIGN_MIDDLE);
-    messageGrid.getCellFormatter().setAlignment(1,
-        0,
-        HasHorizontalAlignment.ALIGN_LEFT,
-        HasVerticalAlignment.ALIGN_MIDDLE);
-    // here's the old messages...
-    Label messageChunk1 = new Label("You don't have any projects yet."
-        + " To learn how to use App Inventor, click the \"Learn\" item"
-        + " at the top of the window; or to start your first project, click "
-        + " the \"New\" button at the upper left of the window.");
-    messageChunk1.setWidth("23em");
-    Label messageChunk2 = new Label("Happy Inventing!");
-    // sample htm message....this works
-    HTML htmlMessage = new HTML ("<img src='/images/getStarted/ExistingUserButton.png' />");
-    // end of old stuff
     
-    CustomButton newUserButton = new PushButton(new Image("images/getStarted/NewUserButton.png"));
-    CustomButton existingUserButton = new PushButton(new Image("images/getStarted/ExistingUserButton.png"));
-	newUserButton.addClickListener(new ClickListener() {
+    Image newUserButton = new Image("images/getStarted/NewUserButton.png");
+  newUserButton.addClickListener(new ClickListener() {
         public void onClick(Widget sender) {
           dialogBox.hide();
           projectToolbar.getStarted();
         }
       });
+  
+  Image existingUserButton = new Image("images/getStarted/ExistingUserButton.png");
+  existingUserButton.addClickListener(new ClickListener() {
+        public void onClick(Widget sender) {
+            dialogBox.hide();
+        }
+    });
+  
+  Image closeButton = new Image("images/getStarted/RedExitButton1.gif");
+  closeButton.addClickListener(new ClickListener() {
+      public void onClick(Widget sender) {
+          dialogBox.hide();
+      }
+  });
+  
+  AbsolutePanel newUserWindow = new AbsolutePanel();
+  
+  Image backgroundImage = new Image("images/getStarted/NewUserSplashBackground.png");
+  
+  newUserWindow.add(backgroundImage);
+  newUserWindow.add(newUserButton);
+  newUserWindow.add(existingUserButton);
+  newUserWindow.add(closeButton);
+  newUserWindow.setWidgetPosition(newUserButton, 190, 160);
+  newUserWindow.setWidgetPosition(existingUserButton, 490, 160);
+  newUserWindow.setWidgetPosition(closeButton, 850, 0);
+  
+  dialogBox.setWidget(newUserWindow);
 
-    
-    // Add the elements to the grids and DialogBox.
-    // messageGrid.setWidget(0, 0, messageChunk1);
-    // messageGrid.setWidget(0, 0, newUserButton);
-    // messageGrid.setWidget(1, 0, existingUserButton);
-
-    mainGrid.setWidget(0, 0, newUserButton);
-    mainGrid.setWidget(0, 1, existingUserButton);
-
-    dialogBox.setWidget(mainGrid);
-
-    dialogBox.center();
     if (showDialog) {
       dialogBox.show();
     }
