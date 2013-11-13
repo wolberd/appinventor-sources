@@ -72,7 +72,7 @@ public class NewUserGetStarted{
       String pathToZip = TEMPLATES_ROOT_DIRECTORY + projectName + "/" + projectName +
         PROJECT_ARCHIVE_EXTENSION;
       ode.getProjectService().newProjectFromTemplate(projectName, pathToZip, callback);
-      createEricaStarterDialog(true);
+      createStarterDialog(true);
     
     }
   }
