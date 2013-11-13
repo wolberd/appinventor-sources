@@ -919,7 +919,7 @@ public class Ode implements EntryPoint {
     final DialogBox dialogBox = new DialogBox(true);
     dialogBox.setStylePrimaryName("ode-DialogBox");
     
-    Image newUserButton = new Image("images/getStarted/NewUserButton.png");
+    Image newUserButton = new Image("images/getStarted/NewtoAIButton1.gif");
   newUserButton.addClickListener(new ClickListener() {
         public void onClick(Widget sender) {
           dialogBox.hide();
@@ -928,7 +928,7 @@ public class Ode implements EntryPoint {
         }
       });
   
-  Image existingUserButton = new Image("images/getStarted/ExistingUserButton.png");
+  Image existingUserButton = new Image("images/getStarted/ExistingUserButton1.gif");
   existingUserButton.addClickListener(new ClickListener() {
         public void onClick(Widget sender) {
             dialogBox.hide();
@@ -944,14 +944,17 @@ public class Ode implements EntryPoint {
   
   AbsolutePanel newUserWindow = new AbsolutePanel();
   
-  Image backgroundImage = new Image("images/getStarted/NewUserSplashBackground.png");
+  Image backgroundImage = new Image("images/getStarted/Background1.gif");
   
   newUserWindow.add(backgroundImage);
   newUserWindow.add(newUserButton);
   newUserWindow.add(existingUserButton);
   newUserWindow.add(closeButton);
-  newUserWindow.setWidgetPosition(newUserButton, 190, 160);
-  newUserWindow.setWidgetPosition(existingUserButton, 490, 160);
+  backgroundImage.setPixelSize(880, 480);
+  newUserButton.setPixelSize(250, 140);
+  existingUserButton.setPixelSize(250, 140);
+  newUserWindow.setWidgetPosition(newUserButton, 165, 160);
+  newUserWindow.setWidgetPosition(existingUserButton, 465, 160);
   newUserWindow.setWidgetPosition(closeButton, 850, 0);
   
   dialogBox.setWidget(newUserWindow);

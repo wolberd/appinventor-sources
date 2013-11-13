@@ -72,7 +72,7 @@ public class NewUserGetStarted{
       String pathToZip = TEMPLATES_ROOT_DIRECTORY + projectName + "/" + projectName +
         PROJECT_ARCHIVE_EXTENSION;
       ode.getProjectService().newProjectFromTemplate(projectName, pathToZip, callback);
-      createStarterDialog(true);
+      createEricaStarterDialog(true);
     
     }
   }
@@ -101,7 +101,7 @@ public class NewUserGetStarted{
     backgroundImage.setPixelSize(835, 470);
     holder.add(backgroundImage);
     
-    Image exitButton = new Image("images/getStarted/RedExitButton1.gif");
+    Image exitButton = new Image("images/getStarted/RedCloseButton2.gif");
     exitButton.addClickListener(new ClickListener() {
         public void onClick(Widget sender) {
             dialogBox.hide();
