@@ -42,21 +42,6 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class NewUserGetStarted{
-  private static final String WIDGET_NAME_NEW = "New";
-  private static final String WIDGET_NAME_DELETE = "Delete";
-  private static final String WIDGET_NAME_MORE_ACTIONS = "MoreActions";
-
-  private static final String WIDGET_NAME_GET_STARTED = "GetStarted";
- 
-  private static final String WIDGET_NAME_DOWNLOAD_ALL = "DownloadAll";
-  private static final String WIDGET_NAME_DOWNLOAD_SOURCE = "DownloadSource";
-  private static final String WIDGET_NAME_UPLOAD_SOURCE = "UploadSource";
-  private static final String WIDGET_NAME_ADMIN = "Admin";
-  private static final String WIDGET_NAME_DOWNLOAD_USER_SOURCE = "DownloadUserSource";
-  private static final String WIDGET_NAME_SWITCH_TO_DEBUG = "SwitchToDebugPane";
-  private static final String WIDGET_NAME_DOWNLOAD_KEYSTORE = "DownloadKeystore";
-  private static final String WIDGET_NAME_UPLOAD_KEYSTORE = "UploadKeystore";
-  private static final String WIDGET_NAME_DELETE_KEYSTORE = "DeleteKeystore";
 
   private static final String PROJECT_ARCHIVE_EXTENSION = ".aia";
   public static final String TEMPLATES_ROOT_DIRECTORY =  "templates/";

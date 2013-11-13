@@ -54,8 +54,6 @@ public class ProjectToolbar extends Toolbar {
   private static final String WIDGET_NAME_NEW = "New";
   private static final String WIDGET_NAME_DELETE = "Delete";
   private static final String WIDGET_NAME_MORE_ACTIONS = "MoreActions";
-
-  private static final String WIDGET_NAME_GET_STARTED = "GetStarted";
  
   private static final String WIDGET_NAME_DOWNLOAD_ALL = "DownloadAll";
   private static final String WIDGET_NAME_DOWNLOAD_SOURCE = "DownloadSource";
