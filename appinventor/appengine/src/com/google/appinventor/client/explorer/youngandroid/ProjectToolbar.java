@@ -5,13 +5,15 @@
 
 package com.google.appinventor.client.explorer.youngandroid;
 
+import static com.google.appinventor.client.Ode.MESSAGES;
+
 import com.google.appinventor.client.ErrorReporter;
 import com.google.appinventor.client.Ode;
-import static com.google.appinventor.client.Ode.MESSAGES;
 import com.google.appinventor.client.OdeAsyncCallback;
 import com.google.appinventor.client.boxes.ProjectListBox;
 import com.google.appinventor.client.boxes.ViewerBox;
 import com.google.appinventor.client.explorer.project.Project;
+import com.google.appinventor.client.explorer.youngandroid.NewUserGetStarted;
 import com.google.appinventor.client.tracking.Tracking;
 import com.google.appinventor.client.utils.Downloader;
 import com.google.appinventor.client.widgets.Toolbar;
@@ -21,6 +23,11 @@ import com.google.appinventor.client.wizards.KeystoreUploadWizard;
 import com.google.appinventor.client.wizards.ProjectUploadWizard;
 import com.google.appinventor.client.wizards.youngandroid.NewYoungAndroidProjectWizard;
 import com.google.appinventor.client.youngandroid.CodeblocksManager;
+
+import com.google.appinventor.shared.rpc.project.UserProject;
+import com.google.appinventor.shared.rpc.project.youngandroid.NewYoungAndroidProjectParameters;
+import com.google.appinventor.shared.rpc.project.youngandroid.YoungAndroidProjectNode;
+
 import com.google.appinventor.shared.rpc.ServerLayout;
 import com.google.appinventor.shared.rpc.user.UserInfoServiceAsync;
 import com.google.appinventor.shared.storage.StorageUtil;
@@ -47,6 +54,10 @@ public class ProjectToolbar extends Toolbar {
   private static final String WIDGET_NAME_DOWNLOAD_KEYSTORE = "DownloadKeystore";
   private static final String WIDGET_NAME_UPLOAD_KEYSTORE = "UploadKeystore";
   private static final String WIDGET_NAME_DELETE_KEYSTORE = "DeleteKeystore";
+  private static final String WIDGET_NAME_GET_STARTED = "GetStarted";
+
+  private static final String PROJECT_ARCHIVE_EXTENSION = ".aia";
+  public static final String TEMPLATES_ROOT_DIRECTORY =  "templates/";
 
   /**
    * Initializes and assembles all commands into buttons in the toolbar.
@@ -82,6 +93,10 @@ public class ProjectToolbar extends Toolbar {
           MESSAGES.downloadUserSourceButton(), new DownloadUserSourceAction()));
       addDropDownButton(WIDGET_NAME_ADMIN, MESSAGES.adminButton(), adminItems);
     }
+
+    addButton(new ToolbarItem(WIDGET_NAME_GET_STARTED, MESSAGES.getStartedButton(),
+        new GetStartedAction()));
+
     updateKeystoreButtons();
     updateButtons();
   }
@@ -295,6 +310,51 @@ public class ProjectToolbar extends Toolbar {
           }
         }
       });
+    }
+  }
+
+
+  public static void getStarted()
+  {
+     GetStartedAction action = new GetStartedAction();
+     action.execute();
+  }
+  
+  private static class GetStartedAction implements Command {
+    @Override
+    public void execute() {
+      
+      final String projectName="GetStarted";
+      // Callback for updating the project explorer after the project is created on the back-end
+      final Ode ode = Ode.getInstance();
+      final OdeAsyncCallback<UserProject> callback = new OdeAsyncCallback<UserProject>(
+        // failure message
+        MESSAGES.createProjectError()) {
+        @Override
+        public void onSuccess(UserProject projectInfo) {
+          // Update project explorer -- i.e., display in project view
+          if (projectInfo == null) {
+
+            Window.alert("Unable to open get started project:" + projectName);
+            ode.getProjectService().newProject(
+              YoungAndroidProjectNode.YOUNG_ANDROID_PROJECT_TYPE,
+              projectName,
+              new NewYoungAndroidProjectParameters(projectName),
+              this);
+            return;
+          }
+          Project project = ode.getProjectManager().addProject(projectInfo);
+          Ode.getInstance().openYoungAndroidProjectInDesigner(project);
+          //if (onSuccessCommand != null) {
+            // onSuccessCommand.execute(project);
+          // }  
+        }
+      };
+      String pathToZip = TEMPLATES_ROOT_DIRECTORY + projectName + "/" + projectName +
+        PROJECT_ARCHIVE_EXTENSION;
+      ode.getProjectService().newProjectFromTemplate(projectName, pathToZip, callback);
+      NewUserGetStarted.createStarterDialog(true);
+    
     }
   }
 

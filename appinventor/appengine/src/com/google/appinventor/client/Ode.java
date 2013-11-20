@@ -8,7 +8,6 @@ package com.google.appinventor.client;
 import static com.google.appinventor.client.Ode.MESSAGES;
 
 import com.google.appinventor.client.boxes.AssetListBox;
-import com.google.appinventor.client.boxes.BlockSelectorBox;
 import com.google.appinventor.client.boxes.MessagesOutputBox;
 import com.google.appinventor.client.boxes.OdeLogBox;
 import com.google.appinventor.client.boxes.PaletteBox;
@@ -850,7 +849,7 @@ public class Ode implements EntryPoint {
         public void onClick(Widget sender) {
           dialogBox.hide();
           //projectToolbar.getStarted();
-          NewUserGetStarted.getStarted();
+          ProjectToolbar.getStarted();
         }
       });
   
