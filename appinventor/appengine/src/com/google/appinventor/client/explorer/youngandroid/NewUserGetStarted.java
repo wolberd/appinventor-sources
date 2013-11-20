@@ -58,6 +58,10 @@ public class NewUserGetStarted{
 				slides.get(currentMessageIndex).show();
 			}
 		}
+		
+		public void exitTutorial() {
+			slides.get(currentMessageIndex).hide();
+		}
 		  
 	}
 
