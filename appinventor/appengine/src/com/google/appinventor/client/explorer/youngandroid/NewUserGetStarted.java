@@ -1,6 +1,6 @@
 package com.google.appinventor.client.explorer.youngandroid;
 
-import static com.google.appinventor.client.Ode.MESSAGES;
+/*import static com.google.appinventor.client.Ode.MESSAGES;
 
 import com.google.appinventor.client.Ode;
 import com.google.appinventor.client.OdeAsyncCallback;
@@ -12,6 +12,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.appinventor.shared.rpc.project.UserProject;
 import com.google.appinventor.shared.rpc.project.youngandroid.NewYoungAndroidProjectParameters;
 import com.google.appinventor.shared.rpc.project.youngandroid.YoungAndroidProjectNode;
+*/
 
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
@@ -119,53 +120,6 @@ public class NewUserGetStarted{
 	}
   }
 
-  private static final String PROJECT_ARCHIVE_EXTENSION = ".aia";
-  public static final String TEMPLATES_ROOT_DIRECTORY =  "templates/";
-
-  public static void getStarted()
-  {
-     GetStartedAction action = new GetStartedAction();
-     action.execute();
-  }
-
-  private static class GetStartedAction implements Command {
-    @Override
-    public void execute() {
-      
-      final String projectName="GetStarted";
-      // Callback for updating the project explorer after the project is created on the back-end
-      final Ode ode = Ode.getInstance();
-      final OdeAsyncCallback<UserProject> callback = new OdeAsyncCallback<UserProject>(
-        // failure message
-        MESSAGES.createProjectError()) {
-        @Override
-        public void onSuccess(UserProject projectInfo) {
-          // Update project explorer -- i.e., display in project view
-          if (projectInfo == null) {
-
-            Window.alert("Unable to open get started project:" + projectName);
-            ode.getProjectService().newProject(
-              YoungAndroidProjectNode.YOUNG_ANDROID_PROJECT_TYPE,
-              projectName,
-              new NewYoungAndroidProjectParameters(projectName),
-              this);
-            return;
-          }
-          Project project = ode.getProjectManager().addProject(projectInfo);
-          Ode.getInstance().openYoungAndroidProjectInDesigner(project);
-          //if (onSuccessCommand != null) {
-            // onSuccessCommand.execute(project);
-          // }  
-        }
-      };
-      String pathToZip = TEMPLATES_ROOT_DIRECTORY + projectName + "/" + projectName +
-        PROJECT_ARCHIVE_EXTENSION;
-      ode.getProjectService().newProjectFromTemplate(projectName, pathToZip, callback);
-      createStarterDialog(true);
-    
-    }
-  }
-  
   // Pull out and start own class here, ideally.
   public static int currentMessageIndex;
 
@@ -175,12 +129,12 @@ public class NewUserGetStarted{
    * @param showDialog Convenience variable to show the created DialogBox.
    * @return The created and optionally displayed Dialog box.
    */
-  public static DialogBox createEricaStarterDialog(boolean showDialog) {
+  public static DialogBox createStarterDialog(boolean showDialog) {
     // Create the UI elements of the DialogBox
     final DialogBox dialogBox = new DialogBox(false, false); // DialogBox(autohide, modal)
     dialogBox.setStylePrimaryName("ode-DialogBox");
-    dialogBox.setHeight("400px");
-    dialogBox.setWidth("400px");
+    //dialogBox.setHeight("400px");
+    //dialogBox.setWidth("400px");
     //dialogBox.setGlassEnabled(true);  // was true
     dialogBox.setAnimationEnabled(true);
     
@@ -215,7 +169,7 @@ public class NewUserGetStarted{
     return dialogBox;
   }
 
-  public static DialogBox createStarterDialog(boolean showDialog) {
+  public static DialogBox createNikiStarterDialog(boolean showDialog) {
     // Create the UI elements of the DialogBox
     final DialogBox dialogBox = new DialogBox(false, false); // DialogBox(autohide, modal)
     dialogBox.setStylePrimaryName("ode-DialogBox");
