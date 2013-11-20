@@ -28,7 +28,83 @@ import com.google.gwt.user.client.ui.Widget;
 import java.util.List;
 import java.util.ArrayList;
 
+
 public class NewUserGetStarted{
+	
+	public class Tutorial {
+		ArrayList<TutorialSlide> slides = new ArrayList<TutorialSlide>();
+		int currentMessageIndex = 0;
+		  
+		public Tutorial() {
+			  
+		}
+		  
+		public void addSlide(TutorialSlide slide) {
+			slides.add(slide);
+		}
+		  
+		public void nextSlide() {
+			if (currentMessageIndex < this.slides.size() - 1) {
+				slides.get(currentMessageIndex).hide();
+				currentMessageIndex += 1;
+				slides.get(currentMessageIndex).show();
+			}
+		}
+		  
+		public void lastSlide() {
+			if (currentMessageIndex > 0) {
+				slides.get(currentMessageIndex).hide();
+				currentMessageIndex += 1;
+				slides.get(currentMessageIndex).show();
+			}
+		}
+		  
+	}
+
+	public class ImageAndLocation {
+		private Image image;
+		private int xLoc;
+		private int yLoc;
+	}
+
+	public class TutorialSlide extends DialogBox {
+	  private ArrayList<Image> images = new ArrayList<Image>();
+	  private Image background;
+	  private Image nextButton;
+	  private Image backButton;
+	  private SimplePanel holder = new SimplePanel();
+	  Tutorial tutorial;
+	  
+	  public TutorialSlide(Tutorial t) {
+		  t.addSlide(this);
+		  tutorial = t;
+	  }
+	  
+	  public void setBackgroundImage(Image background, int x, int y) {
+	    this.background = background;
+	    this.background.setPixelSize(x, y);
+	    this.holder.add(this.background);
+	  }
+	  
+	  public void setNextButton(Image button, int x, int y) {
+	    this.nextButton = button;
+	    this.nextButton.addClickListener(new ClickListener() {
+	      	public void onClick(Widget sender) {
+	      	    tutorial.nextSlide();
+	      	}
+	    });
+	  }
+	  
+	  public void setBackButton(Image button, int x, int y) {
+	    this.backButton = button;
+	    this.backButton.addClickListener(new ClickListener() {
+	        public void onClick(Widget sender) {
+	            tutorial.lastSlide();
+	        }
+	    });
+	  }
+	}
+
 
   private static final String PROJECT_ARCHIVE_EXTENSION = ".aia";
   public static final String TEMPLATES_ROOT_DIRECTORY =  "templates/";
