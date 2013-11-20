@@ -116,7 +116,7 @@ public class NewUserGetStarted{
 		public void onClick(Widget sender) {
 		  tutorial.exit();
 		}
-	  })
+	  });
 	}
   }
 
