@@ -844,7 +844,7 @@ public class Ode implements EntryPoint {
     final DialogBox dialogBox = new DialogBox(true);
     dialogBox.setStylePrimaryName("ode-DialogBox");
     
-    Image newUserButton = new Image("images/getStarted/NewtoAIButton1.gif");
+    Image newUserButton = new Image("images/getStarted/Screen1NewUserButton.png");
   newUserButton.addClickListener(new ClickListener() {
         public void onClick(Widget sender) {
           dialogBox.hide();
@@ -853,14 +853,14 @@ public class Ode implements EntryPoint {
         }
       });
   
-  Image existingUserButton = new Image("images/getStarted/ExistingUserButton1.gif");
+  Image existingUserButton = new Image("images/getStarted/Screen1ExistingUserButton.png");
   existingUserButton.addClickListener(new ClickListener() {
         public void onClick(Widget sender) {
             dialogBox.hide();
         }
     });
   
-  Image closeButton = new Image("images/getStarted/RedExitButton1.gif");
+  Image closeButton = new Image("images/getStarted/Components/0RedCloseButton.png");
   closeButton.addClickListener(new ClickListener() {
       public void onClick(Widget sender) {
           dialogBox.hide();
@@ -869,7 +869,7 @@ public class Ode implements EntryPoint {
   
   AbsolutePanel newUserWindow = new AbsolutePanel();
   
-  Image backgroundImage = new Image("images/getStarted/Background1.gif");
+  Image backgroundImage = new Image("images/getStarted/Screen1Popup.png");
   
   newUserWindow.add(backgroundImage);
   newUserWindow.add(newUserButton);
@@ -878,8 +878,9 @@ public class Ode implements EntryPoint {
   backgroundImage.setPixelSize(880, 480);
   newUserButton.setPixelSize(250, 140);
   existingUserButton.setPixelSize(250, 140);
+  closeButton.setPixelSize(30,30);
   newUserWindow.setWidgetPosition(newUserButton, 160, 160);
-  newUserWindow.setWidgetPosition(existingUserButton, 460, 160);
+  newUserWindow.setWidgetPosition(existingUserButton, 450, 160);
   newUserWindow.setWidgetPosition(closeButton, 850, 0);
   
   dialogBox.setWidget(newUserWindow);

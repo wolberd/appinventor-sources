@@ -680,7 +680,7 @@ select.ode-PropertyEditor[disabled] {
 
 /* All dialog boxes */
 /* would pop more with a white border around their normal green border */
-
+/*
 .ode-DialogBox {
   background-color: white;
   border-left: 4px solid #A4C639;
@@ -691,6 +691,11 @@ select.ode-PropertyEditor[disabled] {
 .ode-DialogBox .dialogTop {
   background-color: #A4C639;
 }
+*/
+
+.ode-DialogBox {
+  width: 100%;
+}
 
 .ode-DialogBox .Caption {
   background-color: #A4C639;
@@ -698,9 +703,10 @@ select.ode-PropertyEditor[disabled] {
   font-family: 'Droid Sans', arial, sans-serif;
   font-weight: bold;
   font-size: 13px;
-  padding: 5px 10px;
+  /*padding: 5px 10px;*/
 }
 
+/*
 .ode-DialogBox .dialogContent {
   padding: 5px 10px;
 }
@@ -714,6 +720,7 @@ select.ode-PropertyEditor[disabled] {
 .ode-DialogBox .gwt-Button {
   margin: 10px;
 }
+*/
 
 /* Settings dialog boxes */
 

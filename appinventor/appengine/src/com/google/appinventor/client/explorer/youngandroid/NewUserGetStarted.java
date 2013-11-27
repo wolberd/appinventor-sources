@@ -6,7 +6,6 @@ import com.google.appinventor.client.Ode;
 import com.google.appinventor.client.OdeAsyncCallback;
 import com.google.appinventor.client.explorer.project.Project;
 import com.google.gwt.user.client.Command;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import com.google.appinventor.shared.rpc.project.UserProject;
@@ -14,6 +13,7 @@ import com.google.appinventor.shared.rpc.project.youngandroid.NewYoungAndroidPro
 import com.google.appinventor.shared.rpc.project.youngandroid.YoungAndroidProjectNode;
 */
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.ClickListener;
@@ -140,25 +140,26 @@ public class NewUserGetStarted{
     
     AbsolutePanel holder = new AbsolutePanel();
     
-    Image backgroundImage = new Image("images/getStarted/Background2.gif");
+    Image backgroundImage = new Image("images/getStarted/Screen2Popup.png");
     backgroundImage.setPixelSize(835, 470);
     holder.add(backgroundImage);
     
-    Image exitButton = new Image("images/getStarted/RedCloseButton2.gif");
+    Image exitButton = new Image("images/getStarted/Components/0RedCloseButton.png");
     exitButton.addClickListener(new ClickListener() {
         public void onClick(Widget sender) {
             dialogBox.hide();
         }
     });
-    
+    exitButton.setPixelSize(30, 30);
     holder.add(exitButton);
     holder.setWidgetPosition(exitButton, 805, 0);
     
-    Image continueButton = new Image("images/getStarted/NextScreenButton2.gif");
+    Image continueButton = new Image("images/getStarted/Components/0BlankRightArrow.png");
     continueButton.setPixelSize(190, 96);
     continueButton.addClickListener(new ClickListener() {
         public void onClick(Widget sender) {
-            dialogBox.hide();
+          dialogBox.hide();
+          beginDesignTutorial(true);
         }
     });
     holder.add(continueButton);
@@ -237,5 +238,211 @@ public class NewUserGetStarted{
     dialogBox.show();
     return dialogBox;
   }
+
+  
+  public static DialogBox beginDesignTutorial(boolean beginDesign) {
+    // Create the UI elements of the DialogBox
+    final DialogBox dialogBox = new DialogBox(false, false); // DialogBox(autohide, modal)
+    dialogBox.setStylePrimaryName("ode-DialogBox");
+    //dialogBox.setHeight("400px");
+    //dialogBox.setWidth("400px");
+    //dialogBox.setGlassEnabled(true);  // was true
+    dialogBox.setAnimationEnabled(true);
+    
+    AbsolutePanel holder = new AbsolutePanel();
+    int browserHeight=Window.getClientHeight();
+    int browserWidth=Window.getClientWidth();
+    
+    Image backgroundImage = new Image("images/getStarted/Screen3Frame.png");
+    backgroundImage.setPixelSize(browserWidth, 410);
+    holder.add(backgroundImage);
+    
+    Image exitButton = new Image("images/getStarted/Components/0RedCloseButton.png");
+    exitButton.addClickListener(new ClickListener() {
+        public void onClick(Widget sender) {
+            dialogBox.hide();
+        }
+    });
+    
+    exitButton.setPixelSize(40,40);
+    holder.add(exitButton);
+    holder.setWidgetPosition(exitButton, browserWidth - 40, 240);
+    
+    Image continueButton = new Image("images/getStarted/Components/0BlankRightArrow.png");
+    continueButton.setPixelSize(190, 96);
+    continueButton.addClickListener(new ClickListener() {
+        public void onClick(Widget sender) {
+          dialogBox.hide();
+          continueDesignTutorial(true);
+        }
+    });
+    holder.add(continueButton);
+    holder.setWidgetPosition(continueButton, browserWidth - 230, 280);
+
+    Image backButton = new Image("images/getStarted/Components/0BlankLeftArrow.png");
+    backButton.setPixelSize(190, 96);
+    backButton.addClickListener(new ClickListener() {
+        public void onClick(Widget sender) {
+          dialogBox.hide();
+          createStarterDialog(true);
+        }
+    });
+    holder.add(backButton);
+    holder.setWidgetPosition(backButton, browserWidth - 450, 280);
+    
+    dialogBox.setWidget(holder);
+
+    dialogBox.setPopupPosition(0, browserHeight - 410);
+
+    dialogBox.show();
+    return dialogBox;
+  }
+
+  public static DialogBox continueDesignTutorial(boolean continueDesign) {
+    // Create the UI elements of the DialogBox
+    final DialogBox dialogBox = new DialogBox(false, false); // DialogBox(autohide, modal)
+    dialogBox.setStylePrimaryName("ode-DialogBox");
+    //dialogBox.setHeight("400px");
+    //dialogBox.setWidth("400px");
+    //dialogBox.setGlassEnabled(true);  // was true
+    dialogBox.setAnimationEnabled(true);
+    
+    AbsolutePanel holder = new AbsolutePanel();
+    int browserHeight=Window.getClientHeight();
+    int browserWidth=Window.getClientWidth();
+    
+    Image backgroundImage = new Image("images/getStarted/Screen4Overlay.png");
+    backgroundImage.setPixelSize(browserWidth, browserHeight);
+    holder.add(backgroundImage);
+    
+    Image exitButton = new Image("images/getStarted/Components/0RedCloseButton.png");
+    exitButton.addClickListener(new ClickListener() {
+        public void onClick(Widget sender) {
+            dialogBox.hide();
+        }
+    });
+    exitButton.setPixelSize(40, 40);
+    holder.add(exitButton);
+    holder.setWidgetPosition(exitButton, browserWidth - 40, 0);
+    
+    Image continueButton = new Image("images/getStarted/Components/0BlankRightArrow.png");
+    continueButton.setPixelSize(190, 96);
+    continueButton.addClickListener(new ClickListener() {
+        public void onClick(Widget sender) {
+          dialogBox.hide();
+          beginDesignPopup(true);
+        }
+    });
+    holder.add(continueButton);
+    holder.setWidgetPosition(continueButton, browserWidth - 230, browserHeight - 125);
+
+    Image backButton = new Image("images/getStarted/Components/0BlankLeftArrow.png");
+    backButton.setPixelSize(190, 96);
+    backButton.addClickListener(new ClickListener() {
+        public void onClick(Widget sender) {
+          dialogBox.hide();
+          beginDesignTutorial(true);
+        }
+    });
+    holder.add(backButton);
+    holder.setWidgetPosition(backButton, browserWidth - 450, browserHeight - 125);
+    
+    dialogBox.setWidget(holder);
+    dialogBox.show();
+    return dialogBox;
+  }
+
+
+  public static DialogBox beginDesignPopup(boolean beginPopup) {
+    // Create the UI elements of the DialogBox
+    final DialogBox dialogBox = new DialogBox(false, false); // DialogBox(autohide, modal)
+    dialogBox.setStylePrimaryName("ode-DialogBox");
+    //dialogBox.setHeight("400px");
+    //dialogBox.setWidth("400px");
+    //dialogBox.setGlassEnabled(true);  // was true
+    dialogBox.setAnimationEnabled(true);
+    
+    AbsolutePanel holder = new AbsolutePanel();
+    int browserWidth=Window.getClientWidth();
+    int browserHeight=Window.getClientHeight();
+    
+    Image backgroundImage = new Image("images/getStarted/Components/0BlankSideMenu.png");
+    backgroundImage.setPixelSize(250, 650);
+    holder.add(backgroundImage);
+    
+    Image exitButton = new Image("images/getStarted/Components/0RedCloseButton.png");
+    exitButton.addClickListener(new ClickListener() {
+        public void onClick(Widget sender) {
+            dialogBox.hide();
+        }
+    });
+    exitButton.setPixelSize(30, 30);
+    holder.add(exitButton);
+    holder.setWidgetPosition(exitButton, 220, 0);
+    
+    Image continueButton = new Image("images/getStarted/Components/0BlankRightArrow.png");
+    continueButton.setPixelSize(80, 40);
+    continueButton.addClickListener(new ClickListener() {
+        public void onClick(Widget sender) {
+          dialogBox.hide();
+          beginProgramTutorial(true);
+        }
+    });
+    holder.add(continueButton);
+    holder.setWidgetPosition(continueButton, 150, 590);
+    
+    dialogBox.setWidget(holder);
+    dialogBox.show();
+    return dialogBox;
+  }
+
+
+  public static DialogBox beginProgramTutorial(boolean beginProgram) {
+    // Create the UI elements of the DialogBox
+    final DialogBox dialogBox = new DialogBox(false, false); // DialogBox(autohide, modal)
+    dialogBox.setStylePrimaryName("ode-DialogBox");
+    //dialogBox.setHeight("400px");
+    //dialogBox.setWidth("400px");
+    //dialogBox.setGlassEnabled(true);  // was true
+    dialogBox.setAnimationEnabled(true);
+    
+    AbsolutePanel holder = new AbsolutePanel();
+    int browserHeight=Window.getClientHeight();
+    int browserWidth=Window.getClientWidth();
+    
+    Image backgroundImage = new Image("images/getStarted/Screen8Frame.png");
+    backgroundImage.setPixelSize(browserWidth, 410);
+    holder.add(backgroundImage);
+    
+    Image exitButton = new Image("images/getStarted/Components/0RedCloseButton.png");
+    exitButton.addClickListener(new ClickListener() {
+        public void onClick(Widget sender) {
+            dialogBox.hide();
+        }
+    });
+    
+    exitButton.setPixelSize(40,40);
+    holder.add(exitButton);
+    holder.setWidgetPosition(exitButton, browserWidth - 40, 240);
+    
+    Image continueButton = new Image("images/getStarted/Components/0BlankRightArrow.png");
+    continueButton.setPixelSize(190, 96);
+    continueButton.addClickListener(new ClickListener() {
+        public void onClick(Widget sender) {
+          dialogBox.hide();
+          //continueProgramTutorial(true);
+        }
+    });
+    holder.add(continueButton);
+    holder.setWidgetPosition(continueButton, browserWidth - 230, 280);
+    
+    dialogBox.setWidget(holder);
+
+    dialogBox.setPopupPosition(0, browserHeight - 410);
+
+    dialogBox.show();
+    return dialogBox;
+  }
+  
 
 }
