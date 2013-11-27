@@ -379,6 +379,16 @@ public class NewUserGetStarted{
     exitButton.setPixelSize(30, 30);
     holder.add(exitButton);
     holder.setWidgetPosition(exitButton, 220, 0);
+
+    Image designHeader = new Image("images/getStarted/Components/1DesignerSideMenuHeader.png");
+    designHeader.setPixelSize(200, 55);
+    holder.add(designHeader);
+    holder.setWidgetPosition(designHeader, 0, 0);
+
+    Image designText = new Image("images/getStarted/Components/1DesignerSideMenuText.png");
+    designText.setPixelSize(250, 540);
+    holder.add(designText);
+    holder.setWidgetPosition(designText, 0, 65);
     
     Image continueButton = new Image("images/getStarted/Components/0BlankRightArrow.png");
     continueButton.setPixelSize(80, 40);
