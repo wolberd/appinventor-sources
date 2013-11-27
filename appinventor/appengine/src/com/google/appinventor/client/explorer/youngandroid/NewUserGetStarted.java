@@ -32,7 +32,7 @@ import java.util.ArrayList;
 
 public class NewUserGetStarted{
 	
-  public class Tutorial {
+  public static class Tutorial {
 	ArrayList<TutorialSlide> slides = new ArrayList<TutorialSlide>();
 	int currentMessageIndex = 0;
 		  
@@ -42,6 +42,7 @@ public class NewUserGetStarted{
 		  
 	public void addSlide(TutorialSlide slide) {
 	  slides.add(slide);
+	  slide.setTutorial(this);
 	}
 		  
 	public void nextSlide() {
@@ -55,7 +56,7 @@ public class NewUserGetStarted{
 	public void lastSlide() {
 	  if (currentMessageIndex > 0) {
 		slides.get(currentMessageIndex).hide();
-		currentMessageIndex += 1;
+		currentMessageIndex -= 1;
 		slides.get(currentMessageIndex).show();
 	  }
 	}
@@ -66,61 +67,71 @@ public class NewUserGetStarted{
 		  
   }
 
-  public class ImageAndLocation {
-	private Image image;
-	private int xLoc;
-	private int yLoc;
-  }
-
-  public class TutorialSlide extends DialogBox {
+  public static class TutorialSlide extends DialogBox {
 	private ArrayList<Image> images = new ArrayList<Image>();
 	private Image background;
-	private Image nextButton;
+	private Image continueButton;
 	private Image backButton;
 	private Image exitButton;
-	private SimplePanel holder = new SimplePanel();
+	private AbsolutePanel holder = new AbsolutePanel();
 	Tutorial tutorial;
-	  
-	public TutorialSlide(Tutorial t) {
-	  t.addSlide(this);
+	
+	public void setTutorial(Tutorial t) {
 	  tutorial = t;
 	}
 	  
-	public void setBackgroundImage(Image background, int x, int y) {
+	public void setBackgroundImage(Image background) {
 	  this.background = background;
-	  this.background.setPixelSize(x, y);
 	  this.holder.add(this.background);
 	}
 	  
-	public void setNextButton(Image button, int x, int y) {
-	  this.nextButton = button;
-	  this.nextButton.addClickListener(new ClickListener() {
+	public void setContinueButton(Image button, int x, int y) {
+	  this.continueButton = button;
+	  holder.add(this.continueButton);
+	  this.continueButton.addClickListener(new ClickListener() {
 	    public void onClick(Widget sender) {
 	      tutorial.nextSlide();
 	    }
 	  });
+	  //TODO: do i need this?
+	  holder.setWidgetPosition(this.continueButton, x, y);
 	}
 	  
 	public void setBackButton(Image button, int x, int y) {
 	  this.backButton = button;
+	  holder.add(this.backButton);
 	  this.backButton.addClickListener(new ClickListener() {
 	    public void onClick(Widget sender) {
 	      tutorial.lastSlide();
 	    }
 	  });
+	  holder.setWidgetPosition(this.backButton, x, y);
 	}  
 
 	public void setExitButton(Image button, int x, int y) {
 	  this.exitButton = button;
+	  holder.add(this.exitButton);
 	  this.exitButton.addClickListener(new ClickListener() {
 		public void onClick(Widget sender) {
 		  tutorial.exit();
 		}
 	  });
+	  holder.setWidgetPosition(this.exitButton, x, y);
 	}
+	
+	public void addImage(Image newImage, int x, int y) {
+	  this.images.add(newImage);
+	  this.holder.add(newImage);
+	  holder.setWidgetPosition(newImage, x, y);
+	}
+	
+	public void ready() {
+	  this.setWidget(holder);
+    }
   }
 
   // Pull out and start own class here, ideally.
+  // TODO: is this still used?
   public static int currentMessageIndex;
 
   /**
@@ -129,340 +140,186 @@ public class NewUserGetStarted{
    * @param showDialog Convenience variable to show the created DialogBox.
    * @return The created and optionally displayed Dialog box.
    */
-  public static DialogBox createStarterDialog(boolean showDialog) {
+  public static Tutorial createStarterDialog(boolean showDialog) {
     // Create the UI elements of the DialogBox
-    final DialogBox dialogBox = new DialogBox(false, false); // DialogBox(autohide, modal)
-    dialogBox.setStylePrimaryName("ode-DialogBox");
+    final Tutorial tutorial = new Tutorial();
+    final TutorialSlide firstSlide= new TutorialSlide(); // DialogBox(autohide, modal)
+    firstSlide.setStylePrimaryName("ode-DialogBox");
     //dialogBox.setHeight("400px");
     //dialogBox.setWidth("400px");
     //dialogBox.setGlassEnabled(true);  // was true
-    dialogBox.setAnimationEnabled(true);
-    
-    AbsolutePanel holder = new AbsolutePanel();
-    
+    firstSlide.setAnimationEnabled(true);
+
     Image backgroundImage = new Image("images/getStarted/Screen2Popup.png");
     backgroundImage.setPixelSize(835, 470);
-    holder.add(backgroundImage);
+    firstSlide.setBackgroundImage(backgroundImage);
     
     Image exitButton = new Image("images/getStarted/Components/0RedCloseButton.png");
-    exitButton.addClickListener(new ClickListener() {
-        public void onClick(Widget sender) {
-            dialogBox.hide();
-        }
-    });
     exitButton.setPixelSize(30, 30);
-    holder.add(exitButton);
-    holder.setWidgetPosition(exitButton, 805, 0);
+    firstSlide.setExitButton(exitButton, 805, 0);
     
     Image continueButton = new Image("images/getStarted/Components/0BlankRightArrow.png");
     continueButton.setPixelSize(190, 96);
-    continueButton.addClickListener(new ClickListener() {
-        public void onClick(Widget sender) {
-          dialogBox.hide();
-          beginDesignTutorial(true);
-        }
-    });
-    holder.add(continueButton);
-    holder.setWidgetPosition(continueButton, 625, 370);
+    firstSlide.setContinueButton(continueButton, 625, 370);
     
-    dialogBox.setWidget(holder);
-    dialogBox.show();
-    return dialogBox;
-  }
-
-  public static DialogBox createNikiStarterDialog(boolean showDialog) {
-    // Create the UI elements of the DialogBox
-    final DialogBox dialogBox = new DialogBox(false, false); // DialogBox(autohide, modal)
-    dialogBox.setStylePrimaryName("ode-DialogBox");
-    dialogBox.setHeight("400px");
-    dialogBox.setWidth("400px");
-    dialogBox.setGlassEnabled(false);  // was true
-    dialogBox.setAnimationEnabled(true);
-    dialogBox.center();
-    final VerticalPanel DialogBoxContents = new VerticalPanel();
-    currentMessageIndex = 0;
-    final ArrayList<HTML> messages = new ArrayList<HTML>();
-    messages.add(new HTML("<h2>This is a sample app to get you started. You can try it on your phone or tablet by downloading the AI Companion app to your device</h2>"));
-    messages.add(new HTML("<h2>Either scan this QR code, or search for MIT AI2 Companion on your device.</h2>"));
-    messages.add(new HTML("<h2>Show the app you're building on your device. Open the companion app on your phone, then on your computer click Connect | Companion and scan the QR code.</h2>"));
-    messages.add(new HTML("<h2>Change the Screen's Title. Can you see the change on your device?</h2>"));
-    messages.add(new HTML("<h2>Change the Screen's Background. Can you see the change on your device?</h2>"));
-    messages.add(new HTML("<h2>Now it's time to explore and modify the app's behavior. Click on the Blocks button.</h2>"));
-    messages.get(0).setStyleName("DialogBox-message");
-    DialogBoxContents.add(messages.get(0));
-    SimplePanel holder = new SimplePanel();
-    Button ok = new Button("Continue");
-    Button back = new Button("Back");
-    // you can put images in appinventor-sources/appinventor/appengine/war/images
-    //   and then...
-    final Image downloadImg = new Image("/images/downloadCompanion.png");
+    firstSlide.ready();
+    tutorial.addSlide(firstSlide);
     
-    ok.addClickListener(new ClickListener() {
-        public void onClick(Widget sender) {
-          /*
-          dialogBox.hide();
-          getProjectService().getProjects(new AsyncCallback<long[]>() {
-              @Override
-              public void onSuccess(long [] projectIds) {
-                if (projectIds.length == 0) {
-                  createNoProjectsDialog(true);
-                }
-              }
-          
-              @Override
-              public void onFailure(Throwable projectIds) {
-                // OdeLog.elog("Could not get project list");
-              }
-            });
-        */
-        // below is a simple and sort of dumb thing to do when the user clicks continue
-        //   we need to set it up so it goes to next step, maybe a different dialog, or
-        //   maybe we have a data structure of steps and we use its data to fill up
-        //   the fixed fields in this dialog box as the user steps through
-          if (currentMessageIndex < messages.size() - 1) {
-            DialogBoxContents.remove(messages.get(currentMessageIndex));
-            currentMessageIndex += 1;
-            messages.get(currentMessageIndex).setStyleName("DialogBox-message");
-            DialogBoxContents.remove(downloadImg);
-            DialogBoxContents.insert(messages.get(currentMessageIndex), 0);
-            dialogBox.setWidget(DialogBoxContents);
-            dialogBox.show();
-          }
-        }
-      });
-    holder.add(ok);
-    //DialogBoxContents.add(message.get(currentMessageIndex));
-    DialogBoxContents.add(downloadImg);
-    DialogBoxContents.add(holder);
-    dialogBox.setWidget(DialogBoxContents);
-    dialogBox.show();
-    return dialogBox;
+    addDesignTutorialSlides(tutorial);
+    
+    
+    firstSlide.show();
+    return tutorial;
   }
-
   
-  public static DialogBox beginDesignTutorial(boolean beginDesign) {
+  public static void addDesignTutorialSlides(Tutorial tutorial) {
+    tutorial.addSlide(beginDesignTutorial(true));
+    tutorial.addSlide(continueDesignTutorial(true));
+    tutorial.addSlide(beginDesignPopup(true));
+    tutorial.addSlide(beginProgramTutorial(true));
+  }
+  
+  public static TutorialSlide beginDesignTutorial(boolean showDialog) {
     // Create the UI elements of the DialogBox
-    final DialogBox dialogBox = new DialogBox(false, false); // DialogBox(autohide, modal)
-    dialogBox.setStylePrimaryName("ode-DialogBox");
+    final TutorialSlide designSlide = new TutorialSlide(); // DialogBox(autohide, modal)
+    designSlide.setStylePrimaryName("ode-DialogBox");
     //dialogBox.setHeight("400px");
     //dialogBox.setWidth("400px");
     //dialogBox.setGlassEnabled(true);  // was true
-    dialogBox.setAnimationEnabled(true);
+    designSlide.setAnimationEnabled(true);
     
-    AbsolutePanel holder = new AbsolutePanel();
-    int browserHeight=Window.getClientHeight();
-    int browserWidth=Window.getClientWidth();
+    int browserHeight = Window.getClientHeight();
+    int browserWidth = Window.getClientWidth();
     
     Image backgroundImage = new Image("images/getStarted/Screen3Frame.png");
     backgroundImage.setPixelSize(browserWidth, 410);
-    holder.add(backgroundImage);
+    designSlide.setBackgroundImage(backgroundImage);
     
     Image exitButton = new Image("images/getStarted/Components/0RedCloseButton.png");
-    exitButton.addClickListener(new ClickListener() {
-        public void onClick(Widget sender) {
-            dialogBox.hide();
-        }
-    });
-    
-    exitButton.setPixelSize(40,40);
-    holder.add(exitButton);
-    holder.setWidgetPosition(exitButton, browserWidth - 40, 240);
+    exitButton.setPixelSize(40, 40);
+    designSlide.setExitButton(exitButton, browserWidth - 40, 240);
     
     Image continueButton = new Image("images/getStarted/Components/0BlankRightArrow.png");
     continueButton.setPixelSize(190, 96);
-    continueButton.addClickListener(new ClickListener() {
-        public void onClick(Widget sender) {
-          dialogBox.hide();
-          continueDesignTutorial(true);
-        }
-    });
-    holder.add(continueButton);
-    holder.setWidgetPosition(continueButton, browserWidth - 230, 280);
+    designSlide.setContinueButton(continueButton, browserWidth - 230, 280);
 
     Image backButton = new Image("images/getStarted/Components/0BlankLeftArrow.png");
     backButton.setPixelSize(190, 96);
-    backButton.addClickListener(new ClickListener() {
-        public void onClick(Widget sender) {
-          dialogBox.hide();
-          createStarterDialog(true);
-        }
-    });
-    holder.add(backButton);
-    holder.setWidgetPosition(backButton, browserWidth - 450, 280);
+    designSlide.setBackButton(backButton, browserWidth - 450, 280);
     
-    dialogBox.setWidget(holder);
+    designSlide.ready();
+    //TODO: ask about this; what does it do and should we have it in all slides?
+    designSlide.setPopupPosition(0, browserHeight - 410);
 
-    dialogBox.setPopupPosition(0, browserHeight - 410);
-
-    dialogBox.show();
-    return dialogBox;
+    return designSlide;
   }
 
-  public static DialogBox continueDesignTutorial(boolean continueDesign) {
+  public static TutorialSlide continueDesignTutorial(boolean showDialog) {
     // Create the UI elements of the DialogBox
-    final DialogBox dialogBox = new DialogBox(false, false); // DialogBox(autohide, modal)
-    dialogBox.setStylePrimaryName("ode-DialogBox");
+    final TutorialSlide designSlide = new TutorialSlide(); // DialogBox(autohide, modal)
+    designSlide.setStylePrimaryName("ode-DialogBox");
     //dialogBox.setHeight("400px");
     //dialogBox.setWidth("400px");
     //dialogBox.setGlassEnabled(true);  // was true
-    dialogBox.setAnimationEnabled(true);
+    designSlide.setAnimationEnabled(true);
     
-    AbsolutePanel holder = new AbsolutePanel();
     int browserHeight=Window.getClientHeight();
     int browserWidth=Window.getClientWidth();
     
     Image backgroundImage = new Image("images/getStarted/Screen4Overlay.png");
     backgroundImage.setPixelSize(browserWidth, browserHeight);
-    holder.add(backgroundImage);
+    designSlide.setBackgroundImage(backgroundImage);
     
     Image exitButton = new Image("images/getStarted/Components/0RedCloseButton.png");
-    exitButton.addClickListener(new ClickListener() {
-        public void onClick(Widget sender) {
-            dialogBox.hide();
-        }
-    });
     exitButton.setPixelSize(40, 40);
-    holder.add(exitButton);
-    holder.setWidgetPosition(exitButton, browserWidth - 40, 0);
+    designSlide.setExitButton(exitButton, browserWidth - 40, 0);
     
     Image continueButton = new Image("images/getStarted/Components/0BlankRightArrow.png");
     continueButton.setPixelSize(190, 96);
-    continueButton.addClickListener(new ClickListener() {
-        public void onClick(Widget sender) {
-          dialogBox.hide();
-          beginDesignPopup(true);
-        }
-    });
-    holder.add(continueButton);
-    holder.setWidgetPosition(continueButton, browserWidth - 230, browserHeight - 125);
+    designSlide.setContinueButton(continueButton, browserWidth - 230, browserHeight - 125);
 
     Image backButton = new Image("images/getStarted/Components/0BlankLeftArrow.png");
     backButton.setPixelSize(190, 96);
-    backButton.addClickListener(new ClickListener() {
-        public void onClick(Widget sender) {
-          dialogBox.hide();
-          beginDesignTutorial(true);
-        }
-    });
-    holder.add(backButton);
-    holder.setWidgetPosition(backButton, browserWidth - 450, browserHeight - 125);
+    designSlide.setBackButton(backButton, browserWidth - 450, browserHeight - 125);
     
-    dialogBox.setWidget(holder);
-    dialogBox.show();
-    return dialogBox;
+    designSlide.ready();
+    
+    return designSlide;
   }
 
 
-  public static DialogBox beginDesignPopup(boolean beginPopup) {
+  //TODO: I actually should probably define a TutorialSlide subclass for popups.
+  public static TutorialSlide beginDesignPopup(boolean showDialog) {
     // Create the UI elements of the DialogBox
-    final DialogBox dialogBox = new DialogBox(false, false); // DialogBox(autohide, modal)
-    dialogBox.setStylePrimaryName("ode-DialogBox");
+    final TutorialSlide designPopup = new TutorialSlide(); // DialogBox(autohide, modal)
+    designPopup.setStylePrimaryName("ode-DialogBox");
     //dialogBox.setHeight("400px");
     //dialogBox.setWidth("400px");
     //dialogBox.setGlassEnabled(true);  // was true
-    dialogBox.setAnimationEnabled(true);
+    designPopup.setAnimationEnabled(true);
     
-    AbsolutePanel holder = new AbsolutePanel();
     int browserWidth=Window.getClientWidth();
     int browserHeight=Window.getClientHeight();
     
     Image backgroundImage = new Image("images/getStarted/Components/0BlankSideMenu.png");
     backgroundImage.setPixelSize(250, 650);
-    holder.add(backgroundImage);
+    designPopup.setBackgroundImage(backgroundImage);
     
     Image exitButton = new Image("images/getStarted/Components/0RedCloseButton.png");
-    exitButton.addClickListener(new ClickListener() {
-        public void onClick(Widget sender) {
-            dialogBox.hide();
-        }
-    });
     exitButton.setPixelSize(30, 30);
-    holder.add(exitButton);
-    holder.setWidgetPosition(exitButton, 220, 0);
+    designPopup.setExitButton(exitButton, 220, 0);
 
     Image designHeader = new Image("images/getStarted/Components/1DesignerSideMenuHeader.png");
     designHeader.setPixelSize(200, 55);
-    holder.add(designHeader);
-    holder.setWidgetPosition(designHeader, 0, 0);
+    designPopup.addImage(designHeader, 0, 0);
 
     Image designText = new Image("images/getStarted/Components/1DesignerSideMenuText.png");
     designText.setPixelSize(250, 540);
-    holder.add(designText);
-    holder.setWidgetPosition(designText, 0, 65);
+    designPopup.addImage(designText, 0, 65);
     
     Image continueButton = new Image("images/getStarted/Components/0BlankRightArrow.png");
     continueButton.setPixelSize(80, 40);
-    continueButton.addClickListener(new ClickListener() {
-        public void onClick(Widget sender) {
-          dialogBox.hide();
-          beginProgramTutorial(true);
-        }
-    });
-    holder.add(continueButton);
-    holder.setWidgetPosition(continueButton, 150, 590);
+    designPopup.setContinueButton(continueButton, 150, 590);
     
-    dialogBox.setWidget(holder);
-    dialogBox.show();
-    return dialogBox;
+    designPopup.ready();
+    
+    return designPopup;
   }
 
 
-  public static DialogBox beginProgramTutorial(boolean beginProgram) {
+  public static TutorialSlide beginProgramTutorial(boolean showDialog) {
     // Create the UI elements of the DialogBox
-    final DialogBox dialogBox = new DialogBox(false, false); // DialogBox(autohide, modal)
-    dialogBox.setStylePrimaryName("ode-DialogBox");
+    final TutorialSlide programSlide = new TutorialSlide(); // DialogBox(autohide, modal)
+    programSlide.setStylePrimaryName("ode-DialogBox");
     //dialogBox.setHeight("400px");
     //dialogBox.setWidth("400px");
     //dialogBox.setGlassEnabled(true);  // was true
-    dialogBox.setAnimationEnabled(true);
+    programSlide.setAnimationEnabled(true);
     
-    AbsolutePanel holder = new AbsolutePanel();
     int browserHeight=Window.getClientHeight();
     int browserWidth=Window.getClientWidth();
     
     Image backgroundImage = new Image("images/getStarted/Screen8Frame.png");
     backgroundImage.setPixelSize(browserWidth, 410);
-    holder.add(backgroundImage);
+    programSlide.setBackgroundImage(backgroundImage);
     
     Image exitButton = new Image("images/getStarted/Components/0RedCloseButton.png");
-    exitButton.addClickListener(new ClickListener() {
-        public void onClick(Widget sender) {
-            dialogBox.hide();
-        }
-    });
-    
     exitButton.setPixelSize(40,40);
-    holder.add(exitButton);
-    holder.setWidgetPosition(exitButton, browserWidth - 40, 240);
+    programSlide.setExitButton(exitButton, browserWidth - 40, 240);
     
     Image continueButton = new Image("images/getStarted/Components/0BlankRightArrow.png");
     continueButton.setPixelSize(190, 96);
-    continueButton.addClickListener(new ClickListener() {
-        public void onClick(Widget sender) {
-          dialogBox.hide();
-          //continueProgramTutorial(true);
-        }
-    });
-    holder.add(continueButton);
-    holder.setWidgetPosition(continueButton, browserWidth - 230, 280);
+    programSlide.setContinueButton(continueButton, browserWidth - 230, 280);
 
     Image backButton = new Image("images/getStarted/Components/0BlankLeftArrow.png");
     backButton.setPixelSize(190, 96);
-    backButton.addClickListener(new ClickListener() {
-        public void onClick(Widget sender) {
-          dialogBox.hide();
-          beginDesignPopup(true);
-        }
-    });
-    holder.add(backButton);
-    holder.setWidgetPosition(backButton, browserWidth - 450, 280);
+    programSlide.setBackButton(backButton, browserWidth - 450, 280);
     
-    dialogBox.setWidget(holder);
+    programSlide.ready();
+    //TODO
+    programSlide.setPopupPosition(0, browserHeight - 410);
 
-    dialogBox.setPopupPosition(0, browserHeight - 410);
-
-    dialogBox.show();
-    return dialogBox;
+    return programSlide;
   }
   
 
