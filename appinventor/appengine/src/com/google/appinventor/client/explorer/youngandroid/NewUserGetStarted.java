@@ -144,7 +144,7 @@ public class NewUserGetStarted{
     // Create the UI elements of the DialogBox
     final Tutorial tutorial = new Tutorial();
     final TutorialSlide firstSlide= new TutorialSlide(); // DialogBox(autohide, modal)
-    firstSlide.setStylePrimaryName("ode-DialogBox");
+    firstSlide.setStylePrimaryName("ode-DialogBox-getStarted");
     //dialogBox.setHeight("400px");
     //dialogBox.setWidth("400px");
     //dialogBox.setGlassEnabled(true);  // was true
@@ -182,7 +182,7 @@ public class NewUserGetStarted{
   public static TutorialSlide beginDesignTutorial(boolean showDialog) {
     // Create the UI elements of the DialogBox
     final TutorialSlide designSlide = new TutorialSlide(); // DialogBox(autohide, modal)
-    designSlide.setStylePrimaryName("ode-DialogBox");
+    designSlide.setStylePrimaryName("ode-DialogBox-getStarted");
     //dialogBox.setHeight("400px");
     //dialogBox.setWidth("400px");
     //dialogBox.setGlassEnabled(true);  // was true
@@ -217,7 +217,7 @@ public class NewUserGetStarted{
   public static TutorialSlide continueDesignTutorial(boolean showDialog) {
     // Create the UI elements of the DialogBox
     final TutorialSlide designSlide = new TutorialSlide(); // DialogBox(autohide, modal)
-    designSlide.setStylePrimaryName("ode-DialogBox");
+    designSlide.setStylePrimaryName("ode-DialogBox-getStarted");
     //dialogBox.setHeight("400px");
     //dialogBox.setWidth("400px");
     //dialogBox.setGlassEnabled(true);  // was true
@@ -252,7 +252,7 @@ public class NewUserGetStarted{
   public static TutorialSlide beginDesignPopup(boolean showDialog) {
     // Create the UI elements of the DialogBox
     final TutorialSlide designPopup = new TutorialSlide(); // DialogBox(autohide, modal)
-    designPopup.setStylePrimaryName("ode-DialogBox");
+    designPopup.setStylePrimaryName("ode-DialogBox-getStarted");
     //dialogBox.setHeight("400px");
     //dialogBox.setWidth("400px");
     //dialogBox.setGlassEnabled(true);  // was true
@@ -290,7 +290,7 @@ public class NewUserGetStarted{
   public static TutorialSlide beginProgramTutorial(boolean showDialog) {
     // Create the UI elements of the DialogBox
     final TutorialSlide programSlide = new TutorialSlide(); // DialogBox(autohide, modal)
-    programSlide.setStylePrimaryName("ode-DialogBox");
+    programSlide.setStylePrimaryName("ode-DialogBox-getStarted");
     //dialogBox.setHeight("400px");
     //dialogBox.setWidth("400px");
     //dialogBox.setGlassEnabled(true);  // was true
