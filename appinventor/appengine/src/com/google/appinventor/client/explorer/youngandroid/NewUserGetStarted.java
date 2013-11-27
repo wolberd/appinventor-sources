@@ -158,7 +158,7 @@ public class NewUserGetStarted{
     exitButton.setPixelSize(30, 30);
     firstSlide.setExitButton(exitButton, 805, 0);
     
-    Image continueButton = new Image("images/getStarted/Components/0BlankRightArrow.png");
+    Image continueButton = new Image("images/getStarted/Components/NextButton.png");
     continueButton.setPixelSize(190, 96);
     firstSlide.setContinueButton(continueButton, 625, 370);
     
@@ -199,11 +199,11 @@ public class NewUserGetStarted{
     exitButton.setPixelSize(40, 40);
     designSlide.setExitButton(exitButton, browserWidth - 40, 240);
     
-    Image continueButton = new Image("images/getStarted/Components/0BlankRightArrow.png");
+    Image continueButton = new Image("images/getStarted/Components/NextButton.png");
     continueButton.setPixelSize(190, 96);
     designSlide.setContinueButton(continueButton, browserWidth - 230, 280);
 
-    Image backButton = new Image("images/getStarted/Components/0BlankLeftArrow.png");
+    Image backButton = new Image("images/getStarted/Components/BackButton.png");
     backButton.setPixelSize(190, 96);
     designSlide.setBackButton(backButton, browserWidth - 450, 280);
     
@@ -234,11 +234,11 @@ public class NewUserGetStarted{
     exitButton.setPixelSize(40, 40);
     designSlide.setExitButton(exitButton, browserWidth - 40, 0);
     
-    Image continueButton = new Image("images/getStarted/Components/0BlankRightArrow.png");
+    Image continueButton = new Image("images/getStarted/Components/NextButton.png");
     continueButton.setPixelSize(190, 96);
     designSlide.setContinueButton(continueButton, browserWidth - 230, browserHeight - 125);
 
-    Image backButton = new Image("images/getStarted/Components/0BlankLeftArrow.png");
+    Image backButton = new Image("images/getStarted/Components/BackButton.png");
     backButton.setPixelSize(190, 96);
     designSlide.setBackButton(backButton, browserWidth - 450, browserHeight - 125);
     
@@ -277,11 +277,13 @@ public class NewUserGetStarted{
     designText.setPixelSize(250, 540);
     designPopup.addImage(designText, 0, 65);
     
-    Image continueButton = new Image("images/getStarted/Components/0BlankRightArrow.png");
+    Image continueButton = new Image("images/getStarted/Components/NextButton.png");
     continueButton.setPixelSize(80, 40);
     designPopup.setContinueButton(continueButton, 150, 590);
     
     designPopup.ready();
+
+    designPopup.setPopupPosition(browserWidth - 250, 0);
     
     return designPopup;
   }
@@ -307,11 +309,11 @@ public class NewUserGetStarted{
     exitButton.setPixelSize(40,40);
     programSlide.setExitButton(exitButton, browserWidth - 40, 240);
     
-    Image continueButton = new Image("images/getStarted/Components/0BlankRightArrow.png");
+    Image continueButton = new Image("images/getStarted/Components/NextButton.png");
     continueButton.setPixelSize(190, 96);
     programSlide.setContinueButton(continueButton, browserWidth - 230, 280);
 
-    Image backButton = new Image("images/getStarted/Components/0BlankLeftArrow.png");
+    Image backButton = new Image("images/getStarted/Components/BackButton.png");
     backButton.setPixelSize(190, 96);
     programSlide.setBackButton(backButton, browserWidth - 450, 280);
     
