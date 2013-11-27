@@ -435,6 +435,17 @@ public class NewUserGetStarted{
     });
     holder.add(continueButton);
     holder.setWidgetPosition(continueButton, browserWidth - 230, 280);
+
+    Image backButton = new Image("images/getStarted/Components/0BlankLeftArrow.png");
+    backButton.setPixelSize(190, 96);
+    backButton.addClickListener(new ClickListener() {
+        public void onClick(Widget sender) {
+          dialogBox.hide();
+          beginDesignPopup(true);
+        }
+    });
+    holder.add(backButton);
+    holder.setWidgetPosition(backButton, browserWidth - 450, 280);
     
     dialogBox.setWidget(holder);
 
