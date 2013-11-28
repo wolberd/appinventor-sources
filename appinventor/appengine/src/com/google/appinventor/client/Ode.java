@@ -896,46 +896,23 @@ public class Ode implements EntryPoint {
    * that informs the user how to start learning about using App Inventor
    * or create a new project.
    * @param showDialog Convenience variable to show the created DialogBox.
-   * @return The created and optionally displayed Dialog box.
+   * @return nothing
    */
-  public DialogBox createWelcomeDialog(boolean showDialog) {
+  public void createWelcomeDialog(boolean showDialog) {
     // Create the UI elements of the DialogBox
-    final DialogBox dialogBox = new DialogBox(false, true); // DialogBox(autohide, modal)
-    dialogBox.setStylePrimaryName("ode-DialogBox");
-    dialogBox.setText("Welcome to App Inventor!");
-    dialogBox.setHeight("400px");
-    dialogBox.setWidth("400px");
-    dialogBox.setGlassEnabled(true);
-    dialogBox.setAnimationEnabled(true);
-    dialogBox.center();
-    VerticalPanel DialogBoxContents = new VerticalPanel();
-    HTML message = new HTML("<h2>This is the Splash Screen. Make this an iframe to your splash screen.</h2>");
-    message.setStyleName("DialogBox-message");
-    SimplePanel holder = new SimplePanel();
-    Button ok = new Button("Continue");
-    ok.addClickListener(new ClickListener() {
-        public void onClick(Widget sender) {
-          dialogBox.hide();
-          getProjectService().getProjects(new AsyncCallback<long[]>() {
-              @Override
-              public void onSuccess(long [] projectIds) {
-                if (projectIds.length == 0) {
-                  createNoProjectsDialog(true);
-                }
-              }
-
-              @Override
-              public void onFailure(Throwable projectIds) {
-                OdeLog.elog("Could not get project list");
-              }
-            });
+    getProjectService().getProjects(new AsyncCallback<long[]>() {
+        @Override
+        public void onSuccess(long [] projectIds) {
+          if (projectIds.length == 0) {
+            createNoProjectsDialog(true);
+          }
         }
-      });
-    holder.add(ok);
-    DialogBoxContents.add(message);
-    DialogBoxContents.add(holder);
-    dialogBox.setWidget(DialogBoxContents);
-    dialogBox.show();
-    return dialogBox;
+
+        @Override
+        public void onFailure(Throwable projectIds) {
+          OdeLog.elog("Could not get project list");
+        }
+    });
+
   }
 }
