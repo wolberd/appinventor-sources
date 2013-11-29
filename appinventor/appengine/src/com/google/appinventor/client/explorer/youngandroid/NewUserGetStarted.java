@@ -273,17 +273,29 @@ public class NewUserGetStarted{
     designHeader.setPixelSize(200, 55);
     designPopup.addImage(designHeader, 0, 0);
 
+    Image designHighlight = new Image("images/getStarted/Components/1DesignerStep1Highlight.png");
+    designHighlight.setPixelSize(200, 135);
+    designPopup.addImage(designHighlight, 0, 65);
+
     Image designText = new Image("images/getStarted/Components/1DesignerSideMenuText.png");
-    designText.setPixelSize(250, 540);
+    designText.setPixelSize(200, 540);
     designPopup.addImage(designText, 0, 65);
+
+    Image checkBox = new Image("images/getStarted/Components/0SideMenuCheckBox.png");
+    checkBox.setPixelSize(40, 40);
+    designPopup.addImage(checkBox, 200, 110);
     
     Image continueButton = new Image("images/getStarted/Components/NextButton.png");
     continueButton.setPixelSize(80, 40);
     designPopup.setContinueButton(continueButton, 150, 590);
+
+    Image backButton = new Image("images/getStarted/Components/BackButton.png");
+    backButton.setPixelSize(80, 40);
+    designPopup.setBackButton(backButton, 20, 590);
     
     designPopup.ready();
 
-    designPopup.setPopupPosition(browserWidth - 250, 0);
+    designPopup.setPopupPosition(browserWidth - 260, 0);
     
     return designPopup;
   }
