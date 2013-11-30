@@ -177,6 +177,9 @@ public class NewUserGetStarted{
     tutorial.addSlide(continueDesignTutorial(true));
     tutorial.addSlide(beginDesignPopup(true));
     tutorial.addSlide(beginProgramTutorial(true));
+    tutorial.addSlide(programOverlay(true));
+    tutorial.addSlide(beginProgramPopup(true));
+    tutorial.addSlide(beginTestSlides(true));
   }
   
   public static TutorialSlide beginDesignTutorial(boolean showDialog) {
@@ -271,7 +274,7 @@ public class NewUserGetStarted{
 
     Image designHeader = new Image("images/getStarted/Components/1DesignerSideMenuHeader.png");
     designHeader.setPixelSize(200, 55);
-    designPopup.addImage(designHeader, 0, 0);
+    designPopup.addImage(designHeader, 10, 0);
 
     Image designHighlight = new Image("images/getStarted/Components/1DesignerStep1Highlight.png");
     designHighlight.setPixelSize(200, 135);
@@ -287,11 +290,11 @@ public class NewUserGetStarted{
     
     Image continueButton = new Image("images/getStarted/Components/NextButton.png");
     continueButton.setPixelSize(80, 40);
-    designPopup.setContinueButton(continueButton, 150, 590);
+    designPopup.setContinueButton(continueButton, 150, 595);
 
     Image backButton = new Image("images/getStarted/Components/BackButton.png");
     backButton.setPixelSize(80, 40);
-    designPopup.setBackButton(backButton, 20, 590);
+    designPopup.setBackButton(backButton, 20, 595);
     
     designPopup.ready();
 
@@ -335,6 +338,125 @@ public class NewUserGetStarted{
 
     return programSlide;
   }
+
   
+  public static TutorialSlide programOverlay(boolean showDialog) {
+    // Create the UI elements of the DialogBox
+    final TutorialSlide programSlide = new TutorialSlide(); // DialogBox(autohide, modal)
+    programSlide.setStylePrimaryName("ode-DialogBox-getStarted");
+    //dialogBox.setHeight("400px");
+    //dialogBox.setWidth("400px");
+    //dialogBox.setGlassEnabled(true);  // was true
+    programSlide.setAnimationEnabled(true);
+    
+    int browserHeight=Window.getClientHeight();
+    int browserWidth=Window.getClientWidth();
+    
+    Image backgroundImage = new Image("images/getStarted/Screen9Overlay.png");
+    backgroundImage.setPixelSize(browserWidth, browserHeight);
+    programSlide.setBackgroundImage(backgroundImage);
+    
+    Image exitButton = new Image("images/getStarted/Components/0RedCloseButton.png");
+    exitButton.setPixelSize(40, 40);
+    programSlide.setExitButton(exitButton, browserWidth - 40, 0);
+    
+    Image continueButton = new Image("images/getStarted/Components/NextButton.png");
+    continueButton.setPixelSize(190, 96);
+    programSlide.setContinueButton(continueButton, browserWidth - 230, browserHeight - 125);
+
+    Image backButton = new Image("images/getStarted/Components/BackButton.png");
+    backButton.setPixelSize(190, 96);
+    programSlide.setBackButton(backButton, browserWidth - 450, browserHeight - 125);
+    
+    programSlide.ready();
+    
+    return programSlide;
+  }  
+
+  //TODO: I actually should probably define a TutorialSlide subclass for popups.
+  public static TutorialSlide beginProgramPopup(boolean showDialog) {
+    // Create the UI elements of the DialogBox
+    final TutorialSlide programPopup = new TutorialSlide(); // DialogBox(autohide, modal)
+    programPopup.setStylePrimaryName("ode-DialogBox-getStarted");
+    //dialogBox.setHeight("400px");
+    //dialogBox.setWidth("400px");
+    //dialogBox.setGlassEnabled(true);  // was true
+    programPopup.setAnimationEnabled(true);
+    
+    int browserWidth=Window.getClientWidth();
+    int browserHeight=Window.getClientHeight();
+    
+    Image backgroundImage = new Image("images/getStarted/Components/0BlankSideMenu.png");
+    backgroundImage.setPixelSize(250, 650);
+    programPopup.setBackgroundImage(backgroundImage);
+    
+    Image exitButton = new Image("images/getStarted/Components/0RedCloseButton.png");
+    exitButton.setPixelSize(30, 30);
+    programPopup.setExitButton(exitButton, 220, 0);
+
+    Image programHeader = new Image("images/getStarted/Components/1ProgramSideMenuHeader.png");
+    programHeader.setPixelSize(200, 55);
+    programPopup.addImage(programHeader, 10, 0);
+
+    Image designHighlight = new Image("images/getStarted/Components/1ProgramStep1Highlight.png");
+    designHighlight.setPixelSize(200, 210);
+    programPopup.addImage(designHighlight, 0, 55);
+
+    Image designText = new Image("images/getStarted/Components/1ProgramSideMenuText.png");
+    designText.setPixelSize(200, 530);
+    programPopup.addImage(designText, 0, 65);
+
+    Image checkBox = new Image("images/getStarted/Components/0SideMenuCheckBox.png");
+    checkBox.setPixelSize(40, 40);
+    programPopup.addImage(checkBox, 200, 110);
+
+    Image checkBox2 = new Image("images/getStarted/Components/0SideMenuCheckBox.png");
+    checkBox2.setPixelSize(40, 40);
+    programPopup.addImage(checkBox2, 200, 250);
+    
+    Image continueButton = new Image("images/getStarted/Components/NextButton.png");
+    continueButton.setPixelSize(80, 40);
+    programPopup.setContinueButton(continueButton, 150, 595);
+
+    Image backButton = new Image("images/getStarted/Components/BackButton.png");
+    backButton.setPixelSize(80, 40);
+    programPopup.setBackButton(backButton, 20, 595);
+    
+    programPopup.ready();
+
+    programPopup.setPopupPosition(browserWidth - 260, 0);
+    
+    return programPopup;
+  }
+
+  public static TutorialSlide beginTestSlides(boolean showDialog) {
+    // Create the UI elements of the DialogBox
+    final TutorialSlide testSlide = new TutorialSlide(); // DialogBox(autohide, modal)
+    testSlide.setStylePrimaryName("ode-DialogBox-getStarted");
+    //dialogBox.setHeight("400px");
+    //dialogBox.setWidth("400px");
+    //dialogBox.setGlassEnabled(true);  // was true
+    testSlide.setAnimationEnabled(true);
+
+    Image backgroundImage = new Image("images/getStarted/Screen14Popup.png");
+    backgroundImage.setPixelSize(835, 470);
+    testSlide.setBackgroundImage(backgroundImage);
+    
+    Image exitButton = new Image("images/getStarted/Components/0RedCloseButton.png");
+    exitButton.setPixelSize(30, 30);
+    testSlide.setExitButton(exitButton, 805, 0);
+    
+    Image continueButton = new Image("images/getStarted/Components/NextButton.png");
+    continueButton.setPixelSize(190, 96);
+    testSlide.setContinueButton(continueButton, 625, 370);
+
+    Image backButton = new Image("images/getStarted/Components/BackButton.png");
+    backButton.setPixelSize(190, 96);
+    testSlide.setBackButton(backButton, 400, 370);
+
+    testSlide.ready();
+
+    return testSlide;
+  }
 
 }
