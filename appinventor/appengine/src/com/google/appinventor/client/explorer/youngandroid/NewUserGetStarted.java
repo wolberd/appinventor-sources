@@ -180,6 +180,13 @@ public class NewUserGetStarted{
     tutorial.addSlide(programOverlay(true));
     tutorial.addSlide(beginProgramPopup(true));
     tutorial.addSlide(beginTestSlides(true));
+    tutorial.addSlide(testSlide1(true));
+    tutorial.addSlide(testSlide2(true));
+    tutorial.addSlide(testSlide3(true));
+    tutorial.addSlide(testSlide4(true));
+    tutorial.addSlide(beginShareSlides(true));
+    tutorial.addSlide(shareSlide1(true));
+    tutorial.addSlide(lastSlide(true));
   }
   
   public static TutorialSlide beginDesignTutorial(boolean showDialog) {
@@ -459,4 +466,214 @@ public class NewUserGetStarted{
     return testSlide;
   }
 
+  public static TutorialSlide testSlide1(boolean showDialog) {
+    // Create the UI elements of the DialogBox
+    final TutorialSlide testSlide = new TutorialSlide(); // DialogBox(autohide, modal)
+    testSlide.setStylePrimaryName("ode-DialogBox-getStarted");
+    //dialogBox.setHeight("400px");
+    //dialogBox.setWidth("400px");
+    //dialogBox.setGlassEnabled(true);  // was true
+    testSlide.setAnimationEnabled(true);
+
+    Image backgroundImage = new Image("images/getStarted/Screen15Popup.png");
+    backgroundImage.setPixelSize(835, 470);
+    testSlide.setBackgroundImage(backgroundImage);
+    
+    Image exitButton = new Image("images/getStarted/Components/0RedCloseButton.png");
+    exitButton.setPixelSize(30, 30);
+    testSlide.setExitButton(exitButton, 805, 0);
+    
+    Image continueButton = new Image("images/getStarted/Components/NextButton.png");
+    continueButton.setPixelSize(190, 96);
+    testSlide.setContinueButton(continueButton, 625, 370);
+
+    Image backButton = new Image("images/getStarted/Components/BackButton.png");
+    backButton.setPixelSize(190, 96);
+    testSlide.setBackButton(backButton, 400, 370);
+
+    testSlide.ready();
+
+    return testSlide;
+  }
+
+  public static TutorialSlide testSlide2(boolean showDialog) {
+    // Create the UI elements of the DialogBox
+    final TutorialSlide testSlide = new TutorialSlide(); // DialogBox(autohide, modal)
+    testSlide.setStylePrimaryName("ode-DialogBox-getStarted");
+    //dialogBox.setHeight("400px");
+    //dialogBox.setWidth("400px");
+    //dialogBox.setGlassEnabled(true);  // was true
+    testSlide.setAnimationEnabled(true);
+
+    Image backgroundImage = new Image("images/getStarted/Screen16Popup.png");
+    backgroundImage.setPixelSize(835, 470);
+    testSlide.setBackgroundImage(backgroundImage);
+    
+    Image exitButton = new Image("images/getStarted/Components/0RedCloseButton.png");
+    exitButton.setPixelSize(30, 30);
+    testSlide.setExitButton(exitButton, 805, 0);
+    
+    Image continueButton = new Image("images/getStarted/Components/NextButton.png");
+    continueButton.setPixelSize(190, 96);
+    testSlide.setContinueButton(continueButton, 625, 370);
+
+    Image backButton = new Image("images/getStarted/Components/BackButton.png");
+    backButton.setPixelSize(190, 96);
+    testSlide.setBackButton(backButton, 400, 370);
+
+    testSlide.ready();
+
+    return testSlide;
+  }
+
+  public static TutorialSlide testSlide3(boolean showDialog) {
+    // Create the UI elements of the DialogBox
+    final TutorialSlide testSlide = new TutorialSlide(); // DialogBox(autohide, modal)
+    testSlide.setStylePrimaryName("ode-DialogBox-getStarted");
+    //dialogBox.setHeight("400px");
+    //dialogBox.setWidth("400px");
+    //dialogBox.setGlassEnabled(true);  // was true
+    testSlide.setAnimationEnabled(true);
+
+    Image backgroundImage = new Image("images/getStarted/Screen17Popup.png");
+    backgroundImage.setPixelSize(835, 470);
+    testSlide.setBackgroundImage(backgroundImage);
+    
+    Image exitButton = new Image("images/getStarted/Components/0RedCloseButton.png");
+    exitButton.setPixelSize(30, 30);
+    testSlide.setExitButton(exitButton, 805, 0);
+    
+    Image continueButton = new Image("images/getStarted/Components/NextButton.png");
+    continueButton.setPixelSize(190, 96);
+    testSlide.setContinueButton(continueButton, 625, 370);
+
+    Image backButton = new Image("images/getStarted/Components/BackButton.png");
+    backButton.setPixelSize(190, 96);
+    testSlide.setBackButton(backButton, 400, 370);
+
+    testSlide.ready();
+
+    return testSlide;
+  }
+
+  public static TutorialSlide testSlide4(boolean showDialog) {
+    // Create the UI elements of the DialogBox
+    final TutorialSlide testSlide = new TutorialSlide(); // DialogBox(autohide, modal)
+    testSlide.setStylePrimaryName("ode-DialogBox-getStarted");
+    //dialogBox.setHeight("400px");
+    //dialogBox.setWidth("400px");
+    //dialogBox.setGlassEnabled(true);  // was true
+    testSlide.setAnimationEnabled(true);
+
+    Image backgroundImage = new Image("images/getStarted/Screen18Popup.png");
+    backgroundImage.setPixelSize(835, 470);
+    testSlide.setBackgroundImage(backgroundImage);
+    
+    Image exitButton = new Image("images/getStarted/Components/0RedCloseButton.png");
+    exitButton.setPixelSize(30, 30);
+    testSlide.setExitButton(exitButton, 805, 0);
+    
+    Image continueButton = new Image("images/getStarted/Components/NextButton.png");
+    continueButton.setPixelSize(190, 96);
+    testSlide.setContinueButton(continueButton, 625, 370);
+
+    Image backButton = new Image("images/getStarted/Components/BackButton.png");
+    backButton.setPixelSize(190, 96);
+    testSlide.setBackButton(backButton, 400, 370);
+
+    testSlide.ready();
+
+    return testSlide;
+  }
+
+  public static TutorialSlide beginShareSlides(boolean showDialog) {
+    // Create the UI elements of the DialogBox
+    final TutorialSlide shareSlide = new TutorialSlide(); // DialogBox(autohide, modal)
+    shareSlide.setStylePrimaryName("ode-DialogBox-getStarted");
+    //dialogBox.setHeight("400px");
+    //dialogBox.setWidth("400px");
+    //dialogBox.setGlassEnabled(true);  // was true
+    shareSlide.setAnimationEnabled(true);
+
+    Image backgroundImage = new Image("images/getStarted/Screen19Popup.png");
+    backgroundImage.setPixelSize(835, 470);
+    shareSlide.setBackgroundImage(backgroundImage);
+    
+    Image exitButton = new Image("images/getStarted/Components/0RedCloseButton.png");
+    exitButton.setPixelSize(30, 30);
+    shareSlide.setExitButton(exitButton, 805, 0);
+    
+    Image continueButton = new Image("images/getStarted/Components/NextButton.png");
+    continueButton.setPixelSize(190, 96);
+    shareSlide.setContinueButton(continueButton, 625, 370);
+
+    Image backButton = new Image("images/getStarted/Components/BackButton.png");
+    backButton.setPixelSize(190, 96);
+    shareSlide.setBackButton(backButton, 400, 370);
+
+    shareSlide.ready();
+
+    return shareSlide;
+  }
+
+  public static TutorialSlide shareSlide1(boolean showDialog) {
+    // Create the UI elements of the DialogBox
+    final TutorialSlide shareSlide = new TutorialSlide(); // DialogBox(autohide, modal)
+    shareSlide.setStylePrimaryName("ode-DialogBox-getStarted");
+    //dialogBox.setHeight("400px");
+    //dialogBox.setWidth("400px");
+    //dialogBox.setGlassEnabled(true);  // was true
+    shareSlide.setAnimationEnabled(true);
+
+    Image backgroundImage = new Image("images/getStarted/Screen20Popup.png");
+    backgroundImage.setPixelSize(835, 470);
+    shareSlide.setBackgroundImage(backgroundImage);
+    
+    Image exitButton = new Image("images/getStarted/Components/0RedCloseButton.png");
+    exitButton.setPixelSize(30, 30);
+    shareSlide.setExitButton(exitButton, 805, 0);
+    
+    Image continueButton = new Image("images/getStarted/Components/NextButton.png");
+    continueButton.setPixelSize(190, 96);
+    shareSlide.setContinueButton(continueButton, 625, 370);
+
+    Image backButton = new Image("images/getStarted/Components/BackButton.png");
+    backButton.setPixelSize(190, 96);
+    shareSlide.setBackButton(backButton, 400, 370);
+
+    shareSlide.ready();
+
+    return shareSlide;
+  }
+
+  public static TutorialSlide lastSlide(boolean showDialog) {
+    // Create the UI elements of the DialogBox
+    final TutorialSlide lastSlide = new TutorialSlide(); // DialogBox(autohide, modal)
+    lastSlide.setStylePrimaryName("ode-DialogBox-getStarted");
+    //dialogBox.setHeight("400px");
+    //dialogBox.setWidth("400px");
+    //dialogBox.setGlassEnabled(true);  // was true
+    lastSlide.setAnimationEnabled(true);
+
+    Image backgroundImage = new Image("images/getStarted/Screen22Popup.png");
+    backgroundImage.setPixelSize(835, 470);
+    lastSlide.setBackgroundImage(backgroundImage);
+    
+    Image exitButton = new Image("images/getStarted/Components/0RedCloseButton.png");
+    exitButton.setPixelSize(30, 30);
+    lastSlide.setExitButton(exitButton, 805, 0);
+    
+    Image startButton = new Image("images/getStarted/Screen22NewProjectButton.png");
+    startButton.setPixelSize(225, 126);
+    lastSlide.setContinueButton(startButton, 160, 160);
+
+    Image moreButton = new Image("images/getStarted/Screen22TutorialsButton.png");
+    moreButton.setPixelSize(225, 126);
+    lastSlide.setBackButton(moreButton, 450, 160);
+
+    lastSlide.ready();
+
+    return lastSlide;
+  }
+    
 }
