@@ -875,13 +875,13 @@ public class Ode implements EntryPoint {
   newUserWindow.add(newUserButton);
   newUserWindow.add(existingUserButton);
   newUserWindow.add(closeButton);
-  backgroundImage.setPixelSize(880, 480);
-  newUserButton.setPixelSize(250, 140);
-  existingUserButton.setPixelSize(250, 140);
+  backgroundImage.setPixelSize(835, 470);
+  newUserButton.setPixelSize(225, 126);
+  existingUserButton.setPixelSize(225, 126);
   closeButton.setPixelSize(30,30);
   newUserWindow.setWidgetPosition(newUserButton, 160, 160);
   newUserWindow.setWidgetPosition(existingUserButton, 450, 160);
-  newUserWindow.setWidgetPosition(closeButton, 850, 0);
+  newUserWindow.setWidgetPosition(closeButton, 805, 0);
   
   dialogBox.setWidget(newUserWindow);
 
