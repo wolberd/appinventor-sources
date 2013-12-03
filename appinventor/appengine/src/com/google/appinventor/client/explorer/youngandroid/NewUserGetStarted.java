@@ -188,6 +188,8 @@ public class NewUserGetStarted{
     tutorial.addSlide(beginProgramTutorial(true));
     tutorial.addSlide(programOverlay(true));
     tutorial.addSlide(beginProgramPopup(true));
+    tutorial.addSlide(beginProgramPopup2(true));
+    tutorial.addSlide(beginProgramPopup3(true));
     tutorial.addSlide(beginTestSlides(true));
     tutorial.addSlide(testSlide1(true));
     tutorial.addSlide(testSlide2(true));
@@ -499,6 +501,125 @@ public class NewUserGetStarted{
     
     return programPopup;
   }
+
+   public static TutorialSlide beginProgramPopup2(boolean showDialog) {
+    // Create the UI elements of the DialogBox
+    final TutorialSlide programPopup = new TutorialSlide(); // DialogBox(autohide, modal)
+    programPopup.setStylePrimaryName("ode-DialogBox-getStarted");
+    //dialogBox.setHeight("400px");
+    //dialogBox.setWidth("400px");
+    //dialogBox.setGlassEnabled(true);  // was true
+    programPopup.setAnimationEnabled(true);
+    
+    int browserWidth=Window.getClientWidth();
+    int browserHeight=Window.getClientHeight();
+    
+    Image backgroundImage = new Image("images/getStarted/Components/0BlankSideMenu.png");
+    backgroundImage.setPixelSize(250, 650);
+    programPopup.setBackgroundImage(backgroundImage);
+    
+    Image exitButton = new Image("images/getStarted/Components/0RedCloseButton.png");
+    exitButton.setPixelSize(30, 30);
+    programPopup.setExitButton(exitButton, 220, 0);
+
+    Image programHeader = new Image("images/getStarted/Components/1ProgramSideMenuHeader.png");
+    programHeader.setPixelSize(200, 55);
+    programPopup.addImage(programHeader, 10, 0);
+
+    Image designHighlight = new Image("images/getStarted/Components/1ProgramStep1Highlight.png");
+    designHighlight.setPixelSize(205, 350);
+    programPopup.addImage(designHighlight, 0, 180);
+
+    Image designText = new Image("images/getStarted/Components/1ProgramSideMenuText.png");
+    designText.setPixelSize(200, 530);
+    programPopup.addImage(designText, 0, 65);
+
+    Image checkBox = new Image("images/getStarted/Components/0SideMenuCheckBox.png");
+    checkBox.setPixelSize(40, 40);
+    programPopup.addImage(checkBox, 200, 110);
+
+    Image check = new Image("images/getStarted/Components/0SideMenuCheck.png");
+    check.setPixelSize(50, 43);
+    programPopup.addImage(check, 195, 105);
+
+    Image checkBox2 = new Image("images/getStarted/Components/0SideMenuCheckBox.png");
+    checkBox2.setPixelSize(40, 40);
+    programPopup.addImage(checkBox2, 200, 250);
+    
+    Image continueButton = new Image("images/getStarted/Components/NextButton.png");
+    continueButton.setPixelSize(80, 40);
+    programPopup.setContinueButton(continueButton, 150, 595, false);
+
+    Image backButton = new Image("images/getStarted/Components/BackButton.png");
+    backButton.setPixelSize(80, 40);
+    programPopup.setBackButton(backButton, 20, 595);
+    
+    programPopup.ready();
+
+    programPopup.setPopupPosition(browserWidth - 260, 0);
+    
+    return programPopup;
+  }
+
+  public static TutorialSlide beginProgramPopup3(boolean showDialog) {
+    // Create the UI elements of the DialogBox
+    final TutorialSlide programPopup = new TutorialSlide(); // DialogBox(autohide, modal)
+    programPopup.setStylePrimaryName("ode-DialogBox-getStarted");
+    //dialogBox.setHeight("400px");
+    //dialogBox.setWidth("400px");
+    //dialogBox.setGlassEnabled(true);  // was true
+    programPopup.setAnimationEnabled(true);
+    
+    int browserWidth=Window.getClientWidth();
+    int browserHeight=Window.getClientHeight();
+    
+    Image backgroundImage = new Image("images/getStarted/Components/0BlankSideMenu.png");
+    backgroundImage.setPixelSize(250, 650);
+    programPopup.setBackgroundImage(backgroundImage);
+    
+    Image exitButton = new Image("images/getStarted/Components/0RedCloseButton.png");
+    exitButton.setPixelSize(30, 30);
+    programPopup.setExitButton(exitButton, 220, 0);
+
+    Image programHeader = new Image("images/getStarted/Components/1ProgramSideMenuHeader.png");
+    programHeader.setPixelSize(200, 55);
+    programPopup.addImage(programHeader, 10, 0);
+
+    Image designText = new Image("images/getStarted/Components/1ProgramSideMenuText.png");
+    designText.setPixelSize(200, 530);
+    programPopup.addImage(designText, 0, 65);
+
+    Image checkBox = new Image("images/getStarted/Components/0SideMenuCheckBox.png");
+    checkBox.setPixelSize(40, 40);
+    programPopup.addImage(checkBox, 200, 110);
+
+    Image check = new Image("images/getStarted/Components/0SideMenuCheck.png");
+    check.setPixelSize(50, 43);
+    programPopup.addImage(check, 195, 105);
+
+    Image checkBox2 = new Image("images/getStarted/Components/0SideMenuCheckBox.png");
+    checkBox2.setPixelSize(40, 40);
+    programPopup.addImage(checkBox2, 200, 250);
+
+    Image check2 = new Image("images/getStarted/Components/0SideMenuCheck.png");
+    check2.setPixelSize(50, 43);
+    programPopup.addImage(check2, 195, 245);
+    
+    Image continueButton = new Image("images/getStarted/Components/NextButton.png");
+    continueButton.setPixelSize(80, 40);
+    programPopup.setContinueButton(continueButton, 150, 595, false);
+
+    Image backButton = new Image("images/getStarted/Components/BackButton.png");
+    backButton.setPixelSize(80, 40);
+    programPopup.setBackButton(backButton, 20, 595);
+    
+    programPopup.ready();
+
+    programPopup.setPopupPosition(browserWidth - 260, 0);
+    
+    return programPopup;
+  }
+
 
   public static TutorialSlide beginTestSlides(boolean showDialog) {
     // Create the UI elements of the DialogBox
