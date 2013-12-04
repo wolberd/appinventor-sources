@@ -134,6 +134,7 @@ public class NewUserGetStarted{
   	}
   	
   	public void ready() {
+      this.setModal(false);
   	  this.setWidget(holder);
     }
   }
