@@ -134,7 +134,9 @@ public class NewUserGetStarted{
   	}
   	
   	public void ready() {
+      this.setGlassEnabled(false);
       this.setModal(false);
+      this.setAutoHideEnabled(false);
   	  this.setWidget(holder);
     }
   }
