@@ -97,13 +97,17 @@ public class GalleryPage extends Composite implements GalleryRequestListener {
   private final FlowPanel appDescription;
   private final FlowPanel appComments;
   private final FlowPanel appCommentsList;
-  
   private String tagSelected;
   
+  
   /**
-   * Creates a new GalleryPage
-   */
-  public GalleryPage(final GalleryApp app,Boolean editable) {
+   * Constructs GUI for gallery app page.
+   *
+   * @param app: the gallery app presented on this page.
+   * 
+   * @param editable: check if user is in an editable state (for publishing).
+   */ 
+  public GalleryPage(final GalleryApp app, Boolean editable) {
 
     this.app = app;
     // Initialize UI
@@ -163,7 +167,7 @@ public class GalleryPage extends Composite implements GalleryRequestListener {
     actionButton.addStyleName("app-action");
     appAction.add(actionButton);     
 
-
+/*
     Button publishButton = new Button("Publish");
     publishButton.addClickHandler(new ClickHandler() {
         @Override
@@ -200,6 +204,7 @@ public class GalleryPage extends Composite implements GalleryRequestListener {
     
     publishButton.addStyleName("app-action");
     appAction.add(publishButton);       
+*/
     
     // App details - header title
     if (editable) {
@@ -367,6 +372,14 @@ public class GalleryPage extends Composite implements GalleryRequestListener {
     } 
   }
   
+
+  /**
+   * Handler for async callbacks on gallery page.
+   *
+   * @param apps: list of returned gallery apps from callback.
+   * 
+   * @param requestId: determines the specific type of app data.
+   */
   @Override
   public void onAppListRequestCompleted(List<GalleryApp> apps, int requestId)   {
     if (apps != null)
@@ -375,14 +388,24 @@ public class GalleryPage extends Composite implements GalleryRequestListener {
       Window.alert("apps was null");
   }
   
-  
+
+  /**
+   * Handler for app comments' async callback.
+   *
+   * @param comments: list of returned comments from callback.
+   */  
   @Override
   public void onCommentsRequestCompleted(List<GalleryComment> comments) {
       galleryGF.generateAppPageComments(comments, appCommentsList);
       if (comments == null) 
         Window.alert("comment list was null");    	
   }
-  
+
+  /**
+   * Handler for opening gallery app in the project designer.
+   *
+   * @param projectInfo: gallery app that user clicks to open.
+   */    
   @Override
   public void onSourceLoadCompleted(UserProject projectInfo) {
       final NewProjectCommand onSuccessCommand = new NewProjectCommand() {
