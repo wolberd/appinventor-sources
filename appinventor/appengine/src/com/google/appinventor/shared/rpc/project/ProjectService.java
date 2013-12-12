@@ -46,6 +46,13 @@ public interface ProjectService extends RemoteService {
   void deleteProject(long projectId);
 
   /**
+   * On publish this sets the project's gallery id
+   * @param projectId  project ID
+   * @param galleryId  gallery ID
+   */
+  void setGalleryId(long projectId, long galleryId);
+
+  /**
    * Returns an array with project IDs.
    *
    * @return  IDs of projects found by the back-end
@@ -113,6 +120,28 @@ public interface ProjectService extends RemoteService {
   String load(long projectId, String fileId);
 
   /**
+   * Loads the file information associated with a node in the project tree. The
+   * actual return value is the raw file contents.
+   *
+   * @param projectId  project ID
+   * @param fileId  project node whose source should be loaded
+   *
+   * @return  raw file content
+   */
+  byte[] loadraw(long projectId, String fileId);
+
+  /**
+   * Loads the file information associated with a node in the project tree. The
+   * actual return value is the raw file contents encoded as base64.
+   *
+   * @param projectId  project ID
+   * @param fileId  project node whose source should be loaded
+   *
+   * @return  raw file content as base64
+   */
+  String loadraw2(long projectId, String fileId);
+
+  /**
    * Loads the contents of multiple files.
    *
    * @param files  list containing file descriptor of files to be loaded
@@ -172,4 +201,25 @@ public interface ProjectService extends RemoteService {
    * @return modification date for project
    */
   long addFile(long projectId, String fileId);
+  
+  UserProject newProjectFromExternalTemplate(String appName, String sourceURL);
+  
+  /**
+   * Reads the template data from a JSON File
+   * @param pathToTemplatesDir pathname of the templates directory which may contain
+   *  0 or more template instances, each of which consists of a JSON file describing
+   *  the template, plus a zip file and image files.
+   *
+   * @return a {@link String} or the template data
+   */
+ 
+  List<GalleryApp> getApps(String url);
+  
+  /**
+   * gets apps from the gallery
+
+   *
+   * @return a {@link List} 
+   */
+   List<GalleryComment> getComments(String url);
 }

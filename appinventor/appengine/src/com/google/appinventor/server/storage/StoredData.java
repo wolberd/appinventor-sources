@@ -74,6 +74,8 @@ public class StoredData {
 
     // The specially formatted project history
     String history;
+
+    long galleryId;    
   }
 
   // Project properties specific to the user
@@ -187,4 +189,17 @@ public class StoredData {
     @Id Long id;
     @Indexed public String emailLower;
   }
+
+  @Unindexed
+  static final class FeedbackData {
+    @Id Long id;
+    public String notes;
+    public String foundIn;
+    public String faultData;
+    public String comments;
+    public String datestamp;
+    public String email;
+    public String projectId;
+  }
+
 }

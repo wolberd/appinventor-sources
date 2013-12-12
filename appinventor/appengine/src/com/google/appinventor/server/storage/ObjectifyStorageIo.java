@@ -12,9 +12,14 @@ import com.google.appengine.api.files.AppEngineFile;
 import com.google.appengine.api.files.FileService;
 import com.google.appengine.api.files.FileServiceFactory;
 import com.google.appengine.api.files.FileWriteChannel;
+import com.google.appengine.api.memcache.ErrorHandlers;
+import com.google.appengine.api.memcache.MemcacheService;
+import com.google.appengine.api.memcache.MemcacheServiceFactory;
+import com.google.appengine.api.memcache.Expiration;
 import com.google.appinventor.server.CrashReport;
 import com.google.appinventor.server.FileExporter;
 import com.google.appinventor.server.flags.Flag;
+import com.google.appinventor.server.storage.StoredData.FeedbackData;
 import com.google.appinventor.server.storage.StoredData.FileData;
 import com.google.appinventor.server.storage.StoredData.MotdData;
 import com.google.appinventor.server.storage.StoredData.ProjectData;
@@ -75,8 +80,12 @@ public class ObjectifyStorageIo implements  StorageIo {
 
   private static final long MOTD_ID = 1;
 
+  public static final long NOTPUBLISHED = -1;
+
   // TODO(user): need a way to modify this. Also, what is really a good value?
   private static final int MAX_JOB_RETRIES = 10;
+
+  private final MemcacheService memcache = MemcacheServiceFactory.getMemcacheService();
 
   // Use this class to define the work of a job that can be retried. The
   // "datastore" argument to run() is the Objectify object for this job
@@ -113,10 +122,12 @@ public class ObjectifyStorageIo implements  StorageIo {
     ObjectifyService.register(MotdData.class);
     ObjectifyService.register(RendezvousData.class);
     ObjectifyService.register(WhiteListData.class);
+    ObjectifyService.register(FeedbackData.class);
   }
 
   ObjectifyStorageIo() {
     fileService = FileServiceFactory.getFileService();
+    memcache.setErrorHandler(ErrorHandlers.getConsistentLogAndContinue(Level.INFO));
     initMotd();
   }
 
@@ -138,7 +149,15 @@ public class ObjectifyStorageIo implements  StorageIo {
    */
   @Override
   public User getUser(final String userId, final String email) {
-    final User user = new User(userId, email, false, false);
+    String cachekey = User.usercachekey + "|" + userId;
+    User tuser = (User) memcache.get(cachekey);
+    if (tuser != null && tuser.getUserTosAccepted() && ((email == null) || (tuser.getUserEmail().equals(email)))) {
+      return tuser;
+    } else {                    // If not in memcache, or tos
+                                // not yet accepted, fetch from datastore
+      tuser = new User(userId, email, false, false);
+    }
+    final User user = tuser;
     try {
       runJobWithRetries(new JobRetryHelper() {
         @Override
@@ -157,6 +176,13 @@ public class ObjectifyStorageIo implements  StorageIo {
     } catch (ObjectifyException e) {
       throw CrashReport.createAndLogError(LOG, null, collectUserErrorInfo(userId), e);
     }
+    memcache.put(cachekey, user, Expiration.byDeltaSeconds(60)); // Remember for one minute
+    // The choice of one minute here is arbitrary. getUser() is called on every authenticated
+    // RPC call to the system (out of OdeAuthFilter), so using memcache will save a significant
+    // number of calls to the datastore. If someone is idle for more then a minute, it isn't
+    // unreasonable to hit the datastore again. By pruning memcache ourselves, we have a
+    // bit more control (maybe) of how things are flushed from memcache. Otherwise we are
+    // at the whim of whatever algorithm App Engine employs now or in the future.
     return user;
   }
 
@@ -268,6 +294,7 @@ public class ObjectifyStorageIo implements  StorageIo {
           pd.name = project.getProjectName();
           pd.settings = projectSettings;
           pd.type = project.getProjectType();
+          pd.galleryId = NOTPUBLISHED;
           datastore.put(pd); // put the project in the db so that it gets assigned an id
 
           assert pd.id != null;
@@ -424,6 +451,24 @@ public class ObjectifyStorageIo implements  StorageIo {
   }
 
   @Override
+  public void setProjectGalleryId(final String userId, final long projectId,final long galleryId) {
+    try {
+      runJobWithRetries(new JobRetryHelper() {
+        @Override
+        public void run(Objectify datastore) {
+          ProjectData projectData = datastore.find(projectKey(projectId));
+          if (projectData != null) {
+            projectData.galleryId = galleryId;
+            datastore.put(projectData);
+          }
+        }
+      });
+    } catch (ObjectifyException e) {
+       throw CrashReport.createAndLogError(LOG, null, collectUserErrorInfo(userId), e);
+    }
+  }
+
+  @Override
   public List<Long> getProjects(final String userId) {
     final List<Long> projects = new ArrayList<Long>();
     try {
@@ -555,6 +600,28 @@ public class ObjectifyStorageIo implements  StorageIo {
     }
     return modDate.t;
   }
+  
+  @Override
+  public long getGalleryId(final String userId, final long projectId) {
+    final Result<Long> galleryId = new Result<Long>();
+    try {
+      runJobWithRetries(new JobRetryHelper() {
+        @Override
+        public void run(Objectify datastore) {
+          ProjectData pd = datastore.find(projectKey(projectId));
+          if (pd != null) {
+            galleryId.t = pd.galleryId;
+          } else {
+            galleryId.t = Long.valueOf(0);
+          }
+        }
+      });
+    } catch (ObjectifyException e) {
+      throw CrashReport.createAndLogError(LOG, null,
+          collectUserProjectErrorInfo(userId, projectId), e);
+    }
+    return galleryId.t;
+  }
 
   @Override
   public String getProjectHistory(final String userId, final long projectId) {
@@ -603,6 +670,28 @@ public class ObjectifyStorageIo implements  StorageIo {
           collectUserProjectErrorInfo(userId, projectId), e);
     }
     return dateCreated.t;
+  }
+
+  @Override
+  public long getProjectGalleryId(final long projectId) {
+    final Result<Long> galleryId = new Result<Long>();
+    try {
+      runJobWithRetries(new JobRetryHelper() {
+        @Override
+        public void run(Objectify datastore) {
+          ProjectData pd = datastore.find(projectKey(projectId));
+          if (pd != null) {
+            galleryId.t = pd.galleryId;
+          } else {
+            galleryId.t = Long.valueOf(0);
+          }
+        }
+      });
+    } catch (ObjectifyException e) {
+      throw CrashReport.createAndLogError(LOG, null,
+          "gallery error", e);
+    }
+    return galleryId.t;
   }
 
   @Override
@@ -1091,7 +1180,8 @@ public class ObjectifyStorageIo implements  StorageIo {
   boolean useBlobstoreForFile(String fileName) {
     return fileName.contains("assets/")
            || fileName.endsWith(".apk")
-           || (fileName.contains("src/") && fileName.endsWith(".blk"));
+           || (fileName.contains("src/") && fileName.endsWith(".blk"))
+           || (fileName.contains("src/") && fileName.endsWith(".bky")); // Blockly files
   }
 
   @Override
@@ -1333,7 +1423,7 @@ public class ObjectifyStorageIo implements  StorageIo {
     out.close();
 
     if (zipName == null) {
-      zipName = projectName.t + ".zip";
+      zipName = projectName.t + ".aia";
     }
     ProjectSourceZip projectSourceZip =
         new ProjectSourceZip(zipName, zipFile.toByteArray(), fileCount.t);
@@ -1421,6 +1511,31 @@ public class ObjectifyStorageIo implements  StorageIo {
     if (data == null)
       return false;
     return true;
+  }
+
+  @Override
+  public void storeFeedback(final String notes, final String foundIn, final String faultData,
+    final String comments, final String datestamp, final String email, final String projectId) {
+    Objectify datastore = ObjectifyService.begin();
+    try {
+      runJobWithRetries(new JobRetryHelper() {
+          @Override
+          public void run(Objectify datastore) {
+            FeedbackData data = new FeedbackData();
+            data.id = null;
+            data.notes = notes;
+            data.foundIn = foundIn;
+            data.faultData = faultData;
+            data.comments = comments;
+            data.datestamp = datestamp;
+            data.email = email;
+            data.projectId = projectId;
+            datastore.put(data);
+          }
+        });
+    } catch (ObjectifyException e) {
+      throw CrashReport.createAndLogError(LOG, null, null, e);
+    }
   }
 
   private void initMotd() {

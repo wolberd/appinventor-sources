@@ -70,7 +70,7 @@ import com.google.appinventor.components.runtime.util.ViewUtil;
  *
  */
 @DesignerComponent(version = YaVersion.FORM_COMPONENT_VERSION,
-    category = ComponentCategory.ARRANGEMENTS,
+    category = ComponentCategory.LAYOUT,
     description = "Top-level component containing all other components in the program",
     showOnPalette = false)
 @SimpleObject
@@ -199,6 +199,8 @@ public class Form extends Activity
     Scrollable(true); // frameLayout is created in Scrollable()
     BackgroundImage("");
     BackgroundColor(Component.COLOR_WHITE);
+    AlignHorizontal(ComponentConstants.GRAVITY_LEFT);
+    AlignVertical(ComponentConstants.GRAVITY_TOP);
     Title("");
   }
 

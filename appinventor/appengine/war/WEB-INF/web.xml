@@ -48,11 +48,11 @@
   <security-constraint>
     <web-resource-collection>
       <url-pattern>/ode2/*</url-pattern>
-      <url-pattern>/docs/*</url-pattern>
+<!--      <url-pattern>/docs/*</url-pattern> -->
       <url-pattern>/learn/*</url-pattern>
       <url-pattern>/about/*</url-pattern>
       <url-pattern>/forum/*</url-pattern>
-      <url-pattern>/rendezvous/*</url-pattern>
+<!--      <url-pattern>/rendezvous/*</url-pattern> -->
     </web-resource-collection>
   </security-constraint>
 
@@ -140,6 +140,20 @@
   <filter-mapping>
     <filter-name>odeAuthFilter</filter-name>
     <servlet-name>projectService</servlet-name>
+  </filter-mapping>
+  
+    <!-- gallery -->
+  <servlet>
+    <servlet-name>galleryService</servlet-name>
+    <servlet-class>com.google.appinventor.server.GalleryServiceImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>galleryService</servlet-name>
+    <url-pattern>/ode/gallery</url-pattern>
+  </servlet-mapping>
+  <filter-mapping>
+    <filter-name>odeAuthFilter</filter-name>
+    <servlet-name>galleryService</servlet-name>
   </filter-mapping>
 
   <!-- upload -->
@@ -235,6 +249,20 @@
   <filter-mapping>
     <filter-name>odeAuthFilter</filter-name>
     <servlet-name>tosServlet</servlet-name>
+  </filter-mapping>
+
+  <!-- feedback -->
+  <servlet>
+    <servlet-name>feedbackServlet</servlet-name>
+    <servlet-class>com.google.appinventor.server.FeedbackServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>feedbackServlet</servlet-name>
+    <url-pattern>/ode/feedback</url-pattern>
+  </servlet-mapping>
+  <filter-mapping>
+    <filter-name>odeAuthFilter</filter-name>
+    <servlet-name>feedbackServlet</servlet-name>
   </filter-mapping>
 
   <!-- logout -->

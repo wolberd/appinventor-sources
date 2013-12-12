@@ -34,6 +34,11 @@ public interface ProjectServiceAsync {
    */
   void deleteProject(long projectId, AsyncCallback<Void> callback);
 
+   /**
+   * @see ProjectService#setGalleryid
+   */
+  void setGalleryId(long projectId, long galleryId, AsyncCallback<java.lang.Void> callback);
+
   /**
    * @see ProjectService#getProjects()
    */
@@ -75,6 +80,16 @@ public interface ProjectServiceAsync {
   void load(long projectId, String fileId, AsyncCallback<String> callback);
 
   /**
+   * @see ProjectService#loadraw(long, String)
+   */
+
+  void loadraw(long projectId, String fileId, AsyncCallback<byte []> callback);
+  /**
+   * @see ProjectService#loadraw2(long, String)
+   */
+  void loadraw2(long projectId, String fileId, AsyncCallback<String> callback);
+
+  /**
    * @see ProjectService#load(List)
    */
   void load(List<FileDescriptor> files, AsyncCallback<List<FileDescriptorWithContent>> callback);
@@ -103,4 +118,11 @@ public interface ProjectServiceAsync {
    * @see ProjectService#addFile(long, String)
    */
   void addFile(long projectId, String fileId, AsyncCallback<Long> callback);
+  
+  void newProjectFromExternalTemplate(String appName, String sourceURL, AsyncCallback<UserProject>
+  callback);
+  
+  void getApps(String url,AsyncCallback<List<GalleryApp>> callback);
+
+  void getComments(String url,AsyncCallback<List<GalleryComment>> callback);
 }
