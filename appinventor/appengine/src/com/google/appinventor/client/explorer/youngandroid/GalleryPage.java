@@ -99,7 +99,6 @@ public class GalleryPage extends Composite implements GalleryRequestListener {
   private final FlowPanel appCommentsList;
   private String tagSelected;
   
-  
   /**
    * Constructs GUI for gallery app page.
    *
