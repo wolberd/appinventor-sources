@@ -27,7 +27,7 @@ public final class GalleryListBox extends Box {
   /**
    * Returns the singleton Gallerys list box.
    *
-   * @return  Gallery list box
+   * @return Gallery list box
    */
   public static GalleryListBox getGalleryListBox() {
     return INSTANCE;
@@ -49,7 +49,7 @@ public final class GalleryListBox extends Box {
   /**
    * Returns Gallery list associated with Gallerys explorer box.
    *
-   * @return  Gallery list
+   * @return Gallery list
    */
   public GalleryList getGalleryList() {
      return plist;

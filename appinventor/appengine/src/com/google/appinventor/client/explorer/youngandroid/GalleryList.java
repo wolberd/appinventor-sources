@@ -75,14 +75,7 @@ import com.google.gwt.user.client.Window;
  * @author wolberd@google.com (Dave Wolber)
  */
 public class GalleryList extends Composite implements GalleryRequestListener {
-//  private enum SortField {
-//    NAME,
-//    DATE,
-//  }
-//  private enum SortOrder {
-//    ASCENDING,
-//    DESCENDING,
-//  }
+
   private  List<GalleryApp> apps;
   private final List<GalleryApp> selectedApps;
   GalleryClient gallery = null;

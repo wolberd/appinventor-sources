@@ -16,7 +16,7 @@ import com.google.appinventor.client.widgets.boxes.Box;
 
 
 /**
- * Box implementation for Gallery list.
+ * Box implementation for Gallery app page.
  *
  */
 public final class GalleryAppBox extends Box {
@@ -30,7 +30,7 @@ public final class GalleryAppBox extends Box {
   /**
    * Returns the singleton GalleryAppBox.
    *
-   * @return  Gallery list box
+   * @return Gallery list box
    */
   public static GalleryAppBox getGalleryAppBox() {
     return INSTANCE;
@@ -58,7 +58,7 @@ public final class GalleryAppBox extends Box {
   /**
    * Returns Gallery page associated with Gallerys explorer box.
    *
-   * @return  Gallery list
+   * @return Gallery list
    */
   public GalleryPage getGalleryPage() {
      return pPage;

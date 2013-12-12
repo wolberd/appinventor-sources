@@ -29,7 +29,6 @@ public interface GalleryService extends RemoteService {
    */
   long publishApp(long projectId, String title,
                          String description);
-
   
   void deleteApp(long galleryId);
 

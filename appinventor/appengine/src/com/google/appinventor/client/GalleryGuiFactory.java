@@ -18,6 +18,11 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 
+/**
+ * Helper class for streamlining gallery's GUI creation / manipulation.
+ *
+ * @author vincentaths@gmail.com (Vincent Zhang)
+ */
 public class GalleryGuiFactory implements GalleryRequestListener {
 	GalleryClient gallery = null;
 

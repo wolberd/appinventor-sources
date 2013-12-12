@@ -3,6 +3,12 @@ package com.google.appinventor.shared.rpc.project;
 import com.google.gwt.user.client.rpc.IsSerializable;
 import java.util.logging.Logger;
 
+/**
+ * Encapsulates data for a single gallery app comment.
+ * 
+ * @author vincentaths@gmail.com (Vincent Zhang)
+ *
+ */
 public class GalleryComment implements IsSerializable{
 	
 	/**
@@ -12,7 +18,6 @@ public class GalleryComment implements IsSerializable{
   private GalleryComment() {
   }
   
-	
   public GalleryComment(String appID, String timeStamp, String text,
 			int numCurFlags, String author, String treeId, int numChildren) {
 		super();
@@ -25,16 +30,9 @@ public class GalleryComment implements IsSerializable{
 		this.numChildren = numChildren;
 	}
 
-
-public String getAppID() {
+  public String getAppID() {
 		return appID;
 	}
-
-
-
-
-
-
 
 	public void setAppID(String appID) {
 		this.appID = appID;
@@ -97,17 +95,10 @@ public String getAppID() {
   private String treeId;
   private int numChildren;
   
-  
-  
- 
-	
-	
 	@Override
 	public String toString()
 	{
 		return text; 
 	}
 	
- 
-
 }

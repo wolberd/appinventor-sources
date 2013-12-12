@@ -5,9 +5,14 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
+/**
+ * Encapsulates data for a single gallery app project.
+ * 
+ * @author vincentaths@gmail.com (Vincent Zhang)
+ *
+ */
 public class GalleryApp implements IsSerializable {
 	
-
 	/**
    * Default constructor. This constructor is required by GWT.
    */
@@ -165,7 +170,7 @@ public class GalleryApp implements IsSerializable {
   //   gallery.appinventor.mit.edu/rpc?getblob=<sourceBlob>:<appid>
   // http://usf-appinventor-gallery.appspot.com/rpc?getblob=AMIfv96uvxoFUHj_Tsv671z66_Iu9HCsUgGad4_py4oWu2INlFgtvW6M5lUPKZwjBAT6Pi_-31MYIGF2aNji_qGZFxTwHH5ryPToMPumbajW0_I4Pf9XY2INsR-o7h_1z8jou1Ey9dS2ES1KjicqOebmCLMYKRrU5tAANrjTj1Bn3n0uipbWvsQ:48002
   public String getSourceURL() {
-     return GALLERYURL+"getblob="+getSourceBlobId()+":"+getGalleryAppId();
+     return GALLERYURL + "getblob=" + getSourceBlobId() + ":" + getGalleryAppId();
   }
 
   public ArrayList<String> getTags() {
