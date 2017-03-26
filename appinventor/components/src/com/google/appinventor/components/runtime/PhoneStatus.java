@@ -5,17 +5,23 @@
 
 package com.google.appinventor.components.runtime;
 
+import java.util.Formatter;
+import java.security.MessageDigest;
+
 import android.app.Activity;
 import android.net.ConnectivityManager;
 import android.net.DhcpInfo;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
+import android.os.Build;
+import android.util.Log;
 
 import com.google.appinventor.components.annotations.DesignerComponent;
 import com.google.appinventor.components.annotations.SimpleFunction;
 import com.google.appinventor.components.annotations.SimpleObject;
 import com.google.appinventor.components.common.ComponentCategory;
 import com.google.appinventor.components.common.YaVersion;
+import com.google.appinventor.components.runtime.util.AppInvHTTPD;
 import com.google.appinventor.components.runtime.Form;
 import com.google.appinventor.components.runtime.ReplForm;
 
@@ -36,6 +42,7 @@ import com.google.appinventor.components.runtime.ReplForm;
 public class PhoneStatus extends AndroidNonvisibleComponent implements Component {
 
   private static Activity activity;
+  private static final String LOG_TAG = "PhoneStatus";
   private final Form form;
 
   public PhoneStatus(ComponentContainer container) {
@@ -67,6 +74,42 @@ public class PhoneStatus extends AndroidNonvisibleComponent implements Component
         connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
     }
     return networkInfo == null ? false : networkInfo.isConnected();
+  }
+
+  @SimpleFunction(description = "Establish the secret seed for HOTP generation. " +
+    "Return the SHA1 of the provided seed, this will be used to contact the " +
+    "rendezvous server.")
+  public String setHmacSeedReturnCode(String seed) {
+    AppInvHTTPD.setHmacKey(seed);
+    MessageDigest Sha1;
+    try {
+      Sha1 = MessageDigest.getInstance("SHA1");
+    } catch (Exception e) {
+      Log.e(LOG_TAG, "Exception getting SHA1 Instance", e);
+      return "";
+    }
+    Sha1.update(seed.getBytes());
+    byte [] result = Sha1.digest();
+    StringBuffer sb = new StringBuffer(result.length * 2);
+    Formatter formatter = new Formatter(sb);
+    for (byte b : result) {
+      formatter.format("%02x", b);
+    }
+    Log.d(LOG_TAG, "Seed = " + seed);
+    Log.d(LOG_TAG, "Code = " + sb.toString());
+    return sb.toString();
+  }
+
+  @SimpleFunction(description = "Returns true if we are running in the emulator")
+  public boolean isEmulator() {
+    if (Build.FINGERPRINT.startsWith("generic"))
+      return true;
+    return false;
+  }
+
+  @SimpleFunction(description = "Start the internal AppInvHTTPD to listen for incoming forms. FOR REPL USE ONLY!")
+  public void startHTTPD() {
+    ReplForm.topform.startHTTPD();
   }
 
   @SimpleFunction(description = "Declare that we have loaded our initial assets and other assets should come from the sdcard")

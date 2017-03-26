@@ -14,8 +14,7 @@
 
   <target name="all">
     <ant inheritAll="false" useNativeBasedir="true" dir="appengine"/>
-    <ant inheritAll="false" useNativeBasedir="true" dir="blockseditor"/>
-    <ant inheritAll="false" useNativeBasedir="true" dir="blockslib"/>
+    <ant inheritAll="false" useNativeBasedir="true" dir="blocklyeditor"/>
     <ant inheritAll="false" useNativeBasedir="true" dir="common"/>
     <ant inheritAll="false" useNativeBasedir="true" dir="buildserver"/>
     <ant inheritAll="false" useNativeBasedir="true" dir="components"/>
@@ -33,10 +32,13 @@
     <ant inheritAll="false" useNativeBasedir="true" dir="aimerger" target="AIMergerApp"/>
   </target>
 
+  <target name="Blockly">
+    <ant inheritAll="false" useNativeBasedir="true" dir="appengine" target="CopyBlocklyToBuildWar"/>
+  </target>
+
   <target name="tests">
     <ant inheritAll="false" useNativeBasedir="true" dir="appengine" target="tests"/>
-    <ant inheritAll="false" useNativeBasedir="true" dir="blockseditor" target="tests"/>
-    <ant inheritAll="false" useNativeBasedir="true" dir="blockslib" target="tests"/>
+    <ant inheritAll="false" useNativeBasedir="true" dir="blocklyeditor" target="tests"/>
     <ant inheritAll="false" useNativeBasedir="true" dir="buildserver" target="tests"/>
     <ant inheritAll="false" useNativeBasedir="true" dir="common" target="tests"/>
     <ant inheritAll="false" useNativeBasedir="true" dir="components" target="tests"/>
@@ -44,8 +46,7 @@
     <junitreport todir="reports">
       <fileset dir="appengine/reports/raw" includes="TEST-*.xml"/>
       <!-- These are not the comments you're looking for.  This is for testing -->
-      <fileset dir="blockseditor/reports/raw" includes="TEST-*.xml"/>
-      <fileset dir="blockslib/reports/raw" includes="TEST-*.xml"/>
+      <fileset dir="blocklyeditor/reports/raw" includes="TEST-*.xml"/>
       <fileset dir="buildserver/reports/raw" includes="TEST-*.xml"/>
       <fileset dir="common/reports/raw" includes="TEST-*.xml"/>
       <fileset dir="components/reports/raw" includes="TEST-*.xml"/>
@@ -59,8 +60,6 @@
     <javadoc destdir="build/javadoc">
       <sourcepath>
         <pathelement location="appengine/src" />
-        <pathelement location="blockseditor/src" />
-        <pathelement location="blockslib/src" />
         <pathelement location="buildserver/src" />
         <pathelement location="common/src" />
         <pathelement location="components/src" />
@@ -131,14 +130,12 @@
 
   <target name="clean">
     <ant inheritAll="false" useNativeBasedir="true" dir="appengine" target="clean"/>
-  	<ant inheritAll="false" useNativeBasedir="true" dir="aimerger" target="clean"/>
-    <ant inheritAll="false" useNativeBasedir="true" dir="blockseditor" target="clean"/>
-    <ant inheritAll="false" useNativeBasedir="true" dir="blockslib" target="clean"/>
+    <ant inheritAll="false" useNativeBasedir="true" dir="blocklyeditor" target="clean"/>
+    <ant inheritAll="false" useNativeBasedir="true" dir="aimerger" target="clean"/>
     <ant inheritAll="false" useNativeBasedir="true" dir="buildserver" target="clean"/>
     <ant inheritAll="false" useNativeBasedir="true" dir="common" target="clean"/>
     <ant inheritAll="false" useNativeBasedir="true" dir="components" target="clean"/>
     <delete dir="build"/>
     <delete dir="reports"/>
   </target>
-
 </project>
